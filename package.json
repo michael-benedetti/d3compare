@@ -14,7 +14,7 @@
     "build": "webpack --mode production --config ./client/webpack.config",
     "postbuild": "echo copying files; cp -f -R ./client/dist/* src/main/resources/static",
     "test": "karma start client/karma.conf.js",
-    "journey": "ts-mocha --timeout=10000 -p ./client/tsconfig.json ./client/spec/journeys/seleniumSetup.ts \"./client/spec/journeys/dashboard.journey.ts\""
+    "journey": "ts-mocha --timeout=10000 -p ./client/tsconfig.json ./client/spec/journeys/seleniumSetup.ts \"./client/spec/journeys/d3compare.journey.ts\""
   },
   "devDependencies": {
     "@types/chai": "^4.1.4",

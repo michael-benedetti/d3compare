@@ -3,6 +3,7 @@
 !gradle/wrapper/gradle-wrapper.jar
 /client/dist/
 src/main/resources/static/bundle.js
+src/main/resources/static/1.bundle.js
 /aws/
 
 ### STS ###
