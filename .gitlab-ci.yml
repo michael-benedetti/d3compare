@@ -1,0 +1,23 @@
+image:
+  name: adambray/matcha-ice-cream
+  entrypoint:
+    - '/usr/bin/env'
+    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+
+stages:
+  - test
+
+variables:
+  MYSQL_DATABASE: home_dashboard
+  MYSQL_PASSWORD: home_dashboard_pass
+  MYSQL_USER: home_dashboard_user
+  MYSQL_ROOT_PASSWORD: home_dashboard_pass
+
+test:
+  services:
+    - mysql:latest
+  stage: test
+  script: pipeline/gitlab_ci_test.sh
+  variables:
+    SPRING_DATASOURCE_URL: "jdbc:mysql://mysql:3306/home_dashboard"
+

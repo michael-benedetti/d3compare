@@ -1,0 +1,4 @@
+d3:
+  client:
+    secret: ${D3_CLIENT_SECRET}
+    id: ${D3_CLIENT_ID}
