@@ -7,17 +7,7 @@ image:
 stages:
   - test
 
-variables:
-  MYSQL_DATABASE: home_dashboard
-  MYSQL_PASSWORD: home_dashboard_pass
-  MYSQL_USER: home_dashboard_user
-  MYSQL_ROOT_PASSWORD: home_dashboard_pass
-
 test:
-  services:
-    - mysql:latest
   stage: test
   script: pipeline/gitlab_ci_test.sh
-  variables:
-    SPRING_DATASOURCE_URL: "jdbc:mysql://mysql:3306/home_dashboard"
 

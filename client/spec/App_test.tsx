@@ -24,6 +24,6 @@ describe("Home Dashboard", () => {
 
     it("renders the app", async () => {
         renderApp();
-        await container.getByText("Welcome.");
+        await container.getByText("Hi.");
     });
 });
