@@ -111,6 +111,14 @@
   color: #00ff00;
 }
 
+.selectors {
+  background: aliceblue;
+  padding: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
