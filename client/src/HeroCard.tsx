@@ -12,6 +12,8 @@ interface HeroCardProps {
   account: string;
   heroid: string;
   heroIndex: number;
+  handleGearMouseEnter: (gearSpot: string) => void;
+  gearSpotTooltip: string;
 }
 
 function HeroCard(props: HeroCardProps) {
@@ -52,6 +54,10 @@ function HeroCard(props: HeroCardProps) {
 
     setHero(fetchedHero);
     setItems(fetchedItems);
+  }
+
+  function handleGearMouseEnter(gearSpot: string) {
+    props.handleGearMouseEnter(gearSpot);
   }
 
   return (
@@ -95,6 +101,8 @@ function HeroCard(props: HeroCardProps) {
                       hero={hero}
                       gearSpot={item}
                       detailedItem={items[item]}
+                      handleGearMouseEnter={handleGearMouseEnter}
+                      gearSpotTooltip={props.gearSpotTooltip}
                     />
                   );
                 })}

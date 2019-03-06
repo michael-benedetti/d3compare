@@ -5,10 +5,11 @@ interface GearItemProps {
   hero: any;
   gearSpot: string;
   detailedItem: any;
+  handleGearMouseEnter: (gearSpot: string) => void;
+  gearSpotTooltip: string
 }
 
 function GearItem(props: GearItemProps) {
-  console.log(props.gearSpot);
   const itemIcon = props.hero["items"][props.gearSpot] && props.hero["items"][props.gearSpot]["icon"] || "";
   const item = props.detailedItem;
   const primaryAttributes = item["attributesHtml"] && item["attributesHtml"]["primary"] || [];
@@ -25,12 +26,17 @@ function GearItem(props: GearItemProps) {
     </div>
   );
 
+  function handleMouseEnter() {
+    props.handleGearMouseEnter(props.gearSpot);
+  }
+
   return (
       <div className={`box ${props.gearSpot}`}>
         <Tooltip
           title={tooltip}
+          open={props.gearSpotTooltip == props.gearSpot}
         >
-          <img alt={props.gearSpot} src={`http://media.blizzard.com/d3/icons/items/large/${itemIcon}.png`}/>
+          <img alt={props.gearSpot} onMouseEnter={handleMouseEnter} src={`http://media.blizzard.com/d3/icons/items/large/${itemIcon}.png`}/>
         </Tooltip>
       </div>
   );
