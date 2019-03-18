@@ -1,0 +1,75 @@
+.tooltip {
+    padding: 10px;
+    background: #222222;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.d3-color-ffffffff {
+    color: #ffffff;
+}
+
+.d3-color-ff6969ff {
+    color: #6969ff;
+}
+
+.d3-color-ffff8000 {
+    color: #ff8000;
+}
+
+.d3-color-ff00ff00 {
+    color: #00ff00;
+}
+
+.head {
+    grid-area: head;
+}
+
+.neck {
+    grid-area: neck;
+}
+
+.torso {
+    grid-area: torso;
+}
+
+.shoulders {
+    grid-area: shoulders;
+}
+
+.feet {
+    grid-area: feet;
+}
+
+.hands {
+    grid-area: hands;
+}
+
+.bracers {
+    grid-area: bracers;
+}
+
+.waist {
+    grid-area: waist;
+}
+
+.leftFinger {
+    grid-area: leftFinger;
+}
+
+.rightFinger {
+    grid-area: rightFinger;
+}
+
+.mainHand {
+    grid-area: mainHand;
+}
+
+.offHand {
+    grid-area: offHand;
+}
+
+.legs {
+    grid-area: legs;
+}

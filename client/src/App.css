@@ -1,129 +1,22 @@
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.hero-grid {
-  display: grid;
-  grid-gap: 10px;
-  grid-template-columns: 100px 100px 100px;
-  grid-template-areas: "head head head" "shoulders torso neck" "hands waist bracers" "leftFinger legs rightFinger" "mainHand feet offHand";
-}
-
-.head {
-  grid-area: head;
-}
-
-.neck {
-  grid-area: neck;
-}
-
-.torso {
-  grid-area: torso;
-}
-
-.shoulders {
-  grid-area: shoulders;
-}
-
-.feet {
-  grid-area: feet;
-}
-
-.hands {
-  grid-area: hands;
-}
-
-.bracers {
-  grid-area: bracers;
-}
-
-.waist {
-  grid-area: waist;
-}
-
-.leftFinger {
-  grid-area: leftFinger;
-}
-
-.rightFinger {
-  grid-area: rightFinger;
-}
-
-.mainHand {
-  grid-area: mainHand;
-}
-
-.offHand {
-  grid-area: offHand;
-}
-
-.legs {
-  grid-area: legs;
+    padding: 25px;
+    text-align: center;
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
 }
 
 .heros {
-  display: grid;
-  grid-gap: 100px;
-  grid-template-columns: 300px 300px;
+    display: grid;
+    grid-gap: 100px;
+    grid-template-columns: 300px 300px 300px 300px;
+    justify-items: center;
 }
 
 .App-link {
-  color: #61dafb;
-}
-
-.tooltip {
-  padding: 10px;
-  background: #222222;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-}
-
-.d3-color-ffffffff {
-  color: #ffffff;
-}
-
-.d3-color-ff6969ff {
-  color: #6969ff;
-}
-
-.d3-color-ffff8000 {
-  color: #ff8000;
-}
-
-.d3-color-ff00ff00 {
-  color: #00ff00;
-}
-
-.selectors {
-  background: aliceblue;
-  padding: 20px;
-  -webkit-border-radius: 20px;
-  -moz-border-radius: 20px;
-  border-radius: 20px;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    color: #61dafb;
 }

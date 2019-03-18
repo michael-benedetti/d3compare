@@ -1,0 +1,21 @@
+.selectors {
+    background: aliceblue;
+    padding: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+}
+
+.hero-grid {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 100px 100px 100px;
+    grid-template-areas: "head head head" "shoulders torso neck" "hands waist bracers" "leftFinger legs rightFinger" "mainHand feet offHand";
+    min-height: 800px;
+}
+
+.stats {
+    font-size: 18px;
+    text-align: justify;
+}
+
