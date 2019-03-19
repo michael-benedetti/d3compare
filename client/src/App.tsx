@@ -32,8 +32,16 @@ const theme = createMuiTheme({
 });
 
 
+export interface IAppContext {
+  hoveredStat: string;
+  setSelectedStat: any;
+}
+
+export const AppContext = React.createContext<IAppContext>({hoveredStat: "", setSelectedStat: () => {}});
+
 function App(props: AppProps) {
   const [gearSpotTooltipVisible, setGearSpotToolTipVisible] = useState<string>("");
+  const [selectedStat, setSelectedStat] = useState<string>("");
   const [heros, setHeros] = useState<HeroIdentifier[]>([
     {
       account: "Demospheus#1879",
@@ -56,37 +64,48 @@ function App(props: AppProps) {
     setHeros([...heros, {account: "", heroId: ""}]);
   }
 
+  function test(stat: string) {
+    setSelectedStat(stat);
+  }
+
   return (
     <MuiThemeProvider theme={theme}>
-      <div className="App">
-        <div className="Workspace">
-          {heros.length < 4 &&
-          <Button
-            onClick={handleAddHero}
-            style={{padding: "5px", width: "130px"}}
-          >
-            Add Hero
-          </Button>}
-          <br/>
-          <br/>
-          <div className={"Heros"}>
-            {heros && heros.map((hero: HeroIdentifier, i: number) => {
-              return (
-                <HeroCard
-                  heroIndex={i}
-                  key={i}
-                  authRepository={props.authRepository}
-                  d3Repository={props.d3Repository}
-                  account={hero.account}
-                  heroid={hero.heroId}
-                  handleGearMouseEnter={handleGearMouseEnter}
-                  gearSpotTooltip={gearSpotTooltipVisible}
-                />
-              )
-            })}
+      <AppContext.Provider
+        value={{
+          hoveredStat: selectedStat,
+          setSelectedStat: test,
+        }}
+      >
+        <div className="App">
+          <div className="Workspace">
+            {heros.length < 4 &&
+            <Button
+              onClick={handleAddHero}
+              style={{padding: "5px", width: "130px"}}
+            >
+              Add Hero
+            </Button>}
+            <br/>
+            <br/>
+            <div className={"Heros"}>
+              {heros && heros.map((hero: HeroIdentifier, i: number) => {
+                return (
+                  <HeroCard
+                    heroIndex={i}
+                    key={i}
+                    authRepository={props.authRepository}
+                    d3Repository={props.d3Repository}
+                    account={hero.account}
+                    heroid={hero.heroId}
+                    handleGearMouseEnter={handleGearMouseEnter}
+                    gearSpotTooltip={gearSpotTooltipVisible}
+                  />
+                )
+              })}
+            </div>
           </div>
         </div>
-      </div>
+      </AppContext.Provider>
     </MuiThemeProvider>
   );
 }

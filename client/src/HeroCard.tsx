@@ -10,11 +10,12 @@ import {
   Profile
 } from "./interfaces";
 import GearItem from "./GearItem";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {Select} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Input from "@material-ui/core/Input";
 import Card from "@material-ui/core/Card";
+import {AppContext, IAppContext} from "./App";
 
 interface HeroCardProps {
   authRepository: AuthRepository;
@@ -33,6 +34,8 @@ function HeroCard(props: HeroCardProps) {
   const [profile, setProfile] = useState<Profile>();
   const [heroInput, setHeroInput] = useState<string>("");
   const [accessToken, setAccessToken] = useState<AccessToken>({});
+
+  const appContext = useContext<IAppContext>(AppContext);
 
   const fetchAccessToken = async () => {
     const fetchedAccessToken: AccessToken = await props.authRepository.getAccessToken();
@@ -71,7 +74,7 @@ function HeroCard(props: HeroCardProps) {
   }
 
   function startCase(stat: string) {
-    const result = stat.replace( /([A-Z])/g, " $1" );
+    const result = stat.replace(/([A-Z])/g, " $1");
     return result.charAt(0).toUpperCase() + result.slice(1);
   }
 
@@ -126,7 +129,14 @@ function HeroCard(props: HeroCardProps) {
             </div>
             <Card className={"Stats"}>
               {Object.keys(hero.stats).map((stat: string) => {
-                return <div className={"StatItem"} key={stat}>{`${startCase(stat)}: ${hero.stats[stat]}`}</div>
+                return <div
+                  style={appContext.hoveredStat === stat ? {color: "red"} : {color: "white"}}
+                  onMouseEnter={() => appContext.setSelectedStat(stat)}
+                  className={"StatItem"}
+                  key={stat}
+                >
+                  {`${startCase(stat)}: ${hero.stats[stat]}`}
+                </div>
               })}
             </Card>
           </div>
