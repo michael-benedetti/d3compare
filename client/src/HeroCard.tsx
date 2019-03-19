@@ -12,6 +12,9 @@ import {
 import GearItem from "./GearItem";
 import {useEffect, useState} from "react";
 import {Select} from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import Input from "@material-ui/core/Input";
+import Card from "@material-ui/core/Card";
 
 interface HeroCardProps {
   authRepository: AuthRepository;
@@ -75,9 +78,10 @@ function HeroCard(props: HeroCardProps) {
   return (
     <>
       <div>
-        <div className="selectors">
-          <input value={profileInput} onChange={handleProfileChange}/>
-          <button onClick={fetchProfile}>submit</button>
+        <Card className="Selector">
+          <Input value={profileInput} onChange={handleProfileChange}/>
+          <br/>
+          <Button onClick={fetchProfile}>submit</Button>
           <br/>
           {profile && (
             <>
@@ -98,14 +102,15 @@ function HeroCard(props: HeroCardProps) {
                   )
                 })}
               </Select>
-              <button onClick={fetchHero}>submit</button>
+              <br/>
+              <Button onClick={fetchHero}>submit</Button>
             </>
           )}
-        </div>
+        </Card>
         {hero && items && (
-          <div>
+          <div className="Hero">
             {hero && hero.name}
-            <div className={"hero-grid"}>
+            <div className={"HeroGrid"}>
               {Object.keys(items).map((item: string, i) => {
                 return (
                   <GearItem
@@ -119,14 +124,11 @@ function HeroCard(props: HeroCardProps) {
                 );
               })}
             </div>
-            <div className={"stats"}>
+            <Card className={"Stats"}>
               {Object.keys(hero.stats).map((stat: string) => {
-                return <div key={stat}>{`${startCase(stat)}: ${hero.stats[stat]}`}</div>
+                return <div className={"StatItem"} key={stat}>{`${startCase(stat)}: ${hero.stats[stat]}`}</div>
               })}
-            </div>
-            <br/>
-            <br/>
-            <br/>
+            </Card>
           </div>
         )}
       </div>

@@ -1,21 +1,31 @@
-.selectors {
-    background: aliceblue;
+.Selector {
+    display: block;
+    width: 300px;
     padding: 20px;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     border-radius: 20px;
+    margin-bottom: 20px;
 }
 
-.hero-grid {
+.HeroGrid {
     display: grid;
-    grid-gap: 10px;
-    grid-template-columns: 100px 100px 100px;
+    grid-template-columns: 33.33% 33.33% 33.33%;
     grid-template-areas: "head head head" "shoulders torso neck" "hands waist bracers" "leftFinger legs rightFinger" "mainHand feet offHand";
+    justify-content: center;
+    align-items: center;
     min-height: 800px;
+    margin-bottom: 20px;
 }
 
-.stats {
+.Stats {
     font-size: 18px;
+    padding: 20px;
     text-align: justify;
+    color: white;
+}
+
+.StatItem:hover {
+    color: red;
 }
 
