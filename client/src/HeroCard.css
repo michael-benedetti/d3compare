@@ -1,6 +1,5 @@
 .Selector {
     display: block;
-    width: 300px;
     padding: 20px;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
@@ -8,14 +7,20 @@
     margin-bottom: 20px;
 }
 
+.Hero {
+    width: 250px;
+}
+
 .HeroGrid {
-    display: grid;
-    grid-template-columns: 33.33% 33.33% 33.33%;
-    grid-template-areas: "head head head" "shoulders torso neck" "hands waist bracers" "leftFinger legs rightFinger" "mainHand feet offHand";
+    position: relative;
+    /*display: grid;*/
+    /*grid-template-columns: auto auto auto;*/
+    /*grid-template-areas: "head head head" "shoulders torso neck" "hands waist bracers" "leftFinger legs rightFinger" "mainHand feet offHand";*/
     justify-content: center;
     align-items: center;
-    min-height: 800px;
+    min-height: 470px;
     margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .Stats {

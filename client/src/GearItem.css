@@ -1,3 +1,30 @@
+.GearItem {
+    position: absolute;
+    display: block;
+    border: 1px solid darkgoldenrod;
+    border-radius: 3px;
+    box-shadow: 2px 2px 2px black;
+    background: #1c1805; /* Old browsers */
+    background: -moz-linear-gradient(top, #1c1805 0%, #544602 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, #1c1805 0%,#544602 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, #1c1805 0%,#544602 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1c1805', endColorstr='#544602',GradientType=0 ); /* IE6-9 */
+}
+
+.Set {
+    border: 1px solid green;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#051c05+0,02510a+100 */
+    background: #051c05; /* Old browsers */
+    background: -moz-linear-gradient(top, #051c05 0%, #02510a 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, #051c05 0%,#02510a 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, #051c05 0%,#02510a 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#051c05', endColorstr='#02510a',GradientType=0 ); /* IE6-9 */
+}
+
+img {
+    position: relative;
+}
+
 .tooltip {
     padding: 10px;
     background: #222222;
@@ -23,53 +50,139 @@
 }
 
 .head {
-    grid-area: head;
+    top: 0px;
+    left: 93px;
+    height: 66px;
+    width: 66px;
 }
 
-.neck {
-    grid-area: neck;
-}
-
-.torso {
-    grid-area: torso;
+#img-head {
+    top: -31px;
 }
 
 .shoulders {
-    grid-area: shoulders;
+    top: 30px;
+    left: 10px;
+    height: 88px;
+    width: 66px;
 }
 
-.feet {
-    grid-area: feet;
+#img-shoulders {
+    top: -20px;
+}
+
+.neck {
+    left: 174px;
+    top: 45px;
+    height: 56px;
+    width: 56px;
+}
+
+#img-neck {
+    top: -3px;
+    left: -3px;
+}
+
+.torso {
+    top: 75px;
+    left: 84px;
+    width: 82px;
+    height: 115px;
+}
+
+#img-torso {
+    top: -22px;
 }
 
 .hands {
-    grid-area: hands;
+    top: 130px;
+    left: 5px;
+    height: 88px;
+    width: 66px;
 }
 
-.bracers {
-    grid-area: bracers;
+#img-hands {
+    top: -15px;
 }
 
 .waist {
-    grid-area: waist;
+    top: 200px;
+    left: 84px;
+    height: 30px;
+    width: 82px;
+}
+
+#img-waist {
+    top: -15px;
+}
+
+.bracers {
+    top: 130px;
+    left: 180px;
+    height: 88px;
+    width: 66px;
+}
+
+#img-bracers {
+    top: -15px;
 }
 
 .leftFinger {
-    grid-area: leftFinger;
+    left: 18px;
+    top: 235px;
+    height: 42px;
+    width: 42px;
+}
+
+#img-leftFinger {
+    left: -10px;
+    top: -10px;
 }
 
 .rightFinger {
-    grid-area: rightFinger;
+    left: 192px;
+    top: 235px;
+    height: 42px;
+    width: 42px;
+}
+
+#img-rightFinger {
+    left: -10px;
+    top: -10px;
 }
 
 .mainHand {
-    grid-area: mainHand;
+    top: 290px;
+    left: 5px;
+    height: 130px;
+    width: 66px;
 }
 
 .offHand {
-    grid-area: offHand;
+    top: 290px;
+    left: 180px;
+    height: 130px;
+    width: 66px;
 }
 
 .legs {
-    grid-area: legs;
+    height: 88px;
+    width: 66px;
+    top: 240px;
+    left: 92px;
+}
+
+#img-legs {
+    top: -20px;
+}
+
+.feet {
+    height: 88px;
+    width: 66px;
+    left: 92px;
+    top: 340px;
+}
+
+#img-feet {
+    top: -20px;
 }

@@ -22,8 +22,10 @@ function GearItem(props: GearItemProps) {
     <div className={"tooltip"}>
       <h2>{item.typeName}</h2>
       <h1>{item.name}</h1>
-      {primaryAttributes.map((attribute: string) => <div key={attribute} dangerouslySetInnerHTML={{__html: attribute}}/>)}
-      {secondaryAttributes.map((attribute: string) => <div key={attribute} dangerouslySetInnerHTML={{__html: attribute}}/>)}
+      {primaryAttributes.map((attribute: string) => <div key={attribute}
+                                                         dangerouslySetInnerHTML={{__html: attribute}}/>)}
+      {secondaryAttributes.map((attribute: string) => <div key={attribute}
+                                                           dangerouslySetInnerHTML={{__html: attribute}}/>)}
       <div dangerouslySetInnerHTML={{__html: setDescription}}/>
       <br/>
       {item.gems && item.gems.map((gem) => <div>{`${gem.item.name}: ${gem.attributes}`}</div>)}
@@ -38,20 +40,23 @@ function GearItem(props: GearItemProps) {
     props.handleGearMouseEnter("");
   }
 
+  const set: boolean = item.set != null;
+
   return (
-      <div className={`box ${props.gearSpot}`}>
-        <Tooltip
-          title={tooltip}
-          open={props.gearSpotTooltip == props.gearSpot}
-        >
-          <img
-            alt={props.gearSpot}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            src={`http://media.blizzard.com/d3/icons/items/large/${itemIcon}.png`}
-          />
-        </Tooltip>
-      </div>
+    <div className={set ? `GearItem Set ${props.gearSpot}` : `GearItem ${props.gearSpot}`}>
+      <Tooltip
+        title={tooltip}
+        open={props.gearSpotTooltip == props.gearSpot}
+      >
+        <img
+          id={`img-${props.gearSpot}`}
+          alt={props.gearSpot}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          src={`http://media.blizzard.com/d3/icons/items/large/${itemIcon}.png`}
+        />
+      </Tooltip>
+    </div>
   );
 }
 
