@@ -19,7 +19,7 @@ function GearItem(props: GearItemProps) {
   const setDescription = item.set && item.set.descriptionHtml || "";
 
   const tooltip = (
-    <div className={"tooltip"}>
+    <div>
       <h2>{item.typeName}</h2>
       <h1>{item.name}</h1>
       {primaryAttributes.map((attribute: string) => <div key={attribute}
@@ -40,10 +40,19 @@ function GearItem(props: GearItemProps) {
     props.handleGearMouseEnter("");
   }
 
-  const set: boolean = item.set != null;
+  let itemType: string = "Normal";
+  if (item.typeName.includes("Set")) {
+    itemType = "Set";
+  } else if (item.typeName.includes("Legendary")) {
+    itemType = "Legendary";
+  } else if (item.typeName.includes("Rare")) {
+    itemType = "Rare";
+  } else if (item.typeName.includes("Magic")) {
+    itemType = "Magic";
+  }
 
   return (
-    <div className={set ? `GearItem Set ${props.gearSpot}` : `GearItem ${props.gearSpot}`}>
+    <div className={`GearItem ${itemType} ${props.gearSpot}`}>
       <Tooltip
         title={tooltip}
         open={props.gearSpotTooltip == props.gearSpot}

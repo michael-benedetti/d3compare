@@ -15,20 +15,18 @@ interface AppProps {
 
 const theme = createMuiTheme({
   palette: {
-    type: 'dark', // Switching the dark mode on is a single property value change.
+    type: 'dark',
   },
-  typography: {
-    // Use the system font instead of the default Roboto font.
-    fontFamily: [
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(','),
-  },
+  overrides: {
+   MuiTooltip: {
+     tooltip: {
+       backgroundColor: "#222222",
+       padding: "10px",
+       border: "2px solid #444433",
+       boxShadow: "2px 2px 2px black",
+     },
+   }
+  }
 });
 
 
@@ -77,7 +75,7 @@ function App(props: AppProps) {
         }}
       >
         <div className="App">
-          <div className="Workspace">
+          <div>
             {heros.length < 4 &&
             <Button
               onClick={handleAddHero}

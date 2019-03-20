@@ -80,7 +80,7 @@ function HeroCard(props: HeroCardProps) {
 
   return (
     <>
-      <div>
+      <div className={"HeroCard"}>
         <Card className="Selector">
           <Input value={profileInput} onChange={handleProfileChange}/>
           <br/>

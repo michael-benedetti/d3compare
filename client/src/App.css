@@ -9,13 +9,7 @@
     font-size: calc(10px + 2vmin);
 }
 
-.Workspace {
-    padding: 25px;
-}
-
 .Heros {
     color: white;
-    display: grid;
-    grid-column-gap: 5%;
-    grid-template-columns: 250px 250px auto auto;
+    display: flex;
 }
