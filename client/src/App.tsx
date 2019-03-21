@@ -20,7 +20,9 @@ const theme = createMuiTheme({
   overrides: {
    MuiTooltip: {
      tooltip: {
-       backgroundColor: "#222222",
+       fontSize: "14px",
+       display: "inline-block",
+       backgroundColor: "black",
        padding: "10px",
        border: "2px solid #444433",
        boxShadow: "2px 2px 2px black",

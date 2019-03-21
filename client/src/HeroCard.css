@@ -19,21 +19,72 @@
 
 .HeroGrid {
     position: relative;
-    /*display: grid;*/
-    /*grid-template-columns: auto auto auto;*/
-    /*grid-template-areas: "head head head" "shoulders torso neck" "hands waist bracers" "leftFinger legs rightFinger" "mainHand feet offHand";*/
     justify-content: center;
     align-items: center;
-    min-height: 470px;
+    min-height: 430px;
     margin-bottom: 20px;
     margin-top: 20px;
 }
 
 .Stats {
     font-size: 18px;
-    padding: 20px;
-    text-align: justify;
     color: white;
+    padding: 10px;
+    text-align: left;
+}
+
+.Skills {
+    justify-content: center;
+    display: grid;
+    grid-template-areas: "p0 p0 p1 p1"
+                         "p2 p3 p4 p5"
+                         "s0 s1 s2 s3";
+    grid-template-columns: repeat(4, 42px);
+    grid-gap: 3px;
+    margin-bottom: 20px;
+    height: 150px;
+}
+
+.p0 {
+    grid-area: p0;
+    text-align: right;
+}
+
+.p1 {
+    grid-area: p1;
+    text-align: left;
+}
+
+.p2 {
+    grid-area: p2;
+}
+
+.p3 {
+    grid-area: p3;
+}
+
+.p4 {
+    grid-area: p4;
+}
+
+.p5 {
+    grid-area: p5;
+}
+
+.s0 {
+    grid-area: s0;
+}
+
+.s1 {
+    grid-area: s1;
+}
+
+.s2 {
+    grid-area: s2;
+}
+
+.s3 {
+    grid-area: s3;
 }
 
 .StatItem:hover {

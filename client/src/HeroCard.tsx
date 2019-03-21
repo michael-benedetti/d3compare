@@ -118,6 +118,7 @@ function HeroCard(props: HeroCardProps) {
                 return (
                   <GearItem
                     key={`${props.heroIndex}-${item}`}
+                    heroIndex={props.heroIndex}
                     hero={hero}
                     gearSpot={item}
                     detailedItem={items[item]}
@@ -126,6 +127,25 @@ function HeroCard(props: HeroCardProps) {
                   />
                 );
               })}
+            </div>
+            <div className={"Skills"}>
+              {hero.skills.active.map((skill, i) =>
+                <div className={`p${i}`}>
+                  <a className={`Skill p${i}`} key={skill.skill.slug}
+                     href={`https://us.diablo3.com/en${skill.skill.tooltipUrl}`}>
+                    <img alt={skill.skill.slug}
+                         src={`http://media.blizzard.com/d3/icons/skills/42/${skill.skill.icon}.png`}/>
+                  </a>
+                </div>
+              )}
+              {hero.skills.passive.map((skill, i) =>
+                <div className={`s${i}`}>
+                  <a key={skill.skill.slug} href={`https://us.diablo3.com/en${skill.skill.tooltipUrl}`}>
+                    <img alt={skill.skill.slug}
+                         src={`http://media.blizzard.com/d3/icons/skills/42/${skill.skill.icon}.png`}/>
+                  </a>
+                </div>
+              )}
             </div>
             <Card className={"Stats"}>
               {Object.keys(hero.stats).map((stat: string) => {

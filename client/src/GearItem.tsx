@@ -5,6 +5,7 @@ import {DetailedHeroData, DetailedItem} from "./interfaces";
 
 interface GearItemProps {
   hero: DetailedHeroData;
+  heroIndex: number;
   gearSpot: string;
   detailedItem: DetailedItem;
   handleGearMouseEnter: (gearSpot: string) => void;
@@ -20,15 +21,18 @@ function GearItem(props: GearItemProps) {
 
   const tooltip = (
     <div>
-      <h2>{item.typeName}</h2>
-      <h1>{item.name}</h1>
+      <h3>{item.typeName}</h3>
+      <h2>{item.name}</h2>
       {primaryAttributes.map((attribute: string) => <div key={attribute}
                                                          dangerouslySetInnerHTML={{__html: attribute}}/>)}
       {secondaryAttributes.map((attribute: string) => <div key={attribute}
                                                            dangerouslySetInnerHTML={{__html: attribute}}/>)}
       <div dangerouslySetInnerHTML={{__html: setDescription}}/>
       <br/>
-      {item.gems && item.gems.map((gem) => <div>{`${gem.item.name}: ${gem.attributes}`}</div>)}
+      <div className={"Gems"}>
+      {item.gems && item.gems.map((gem, i) =>
+        <div className="Gem" key={`${props.heroIndex}-${gem.item.slug}-${i}`}><img src={`http://media.blizzard.com/d3/icons/items/small/${gem.item.icon}.png`}/>{`${gem.attributes}`}</div>)}
+      </div>
     </div>
   );
 
