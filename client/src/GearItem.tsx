@@ -30,8 +30,9 @@ function GearItem(props: GearItemProps) {
       <div dangerouslySetInnerHTML={{__html: setDescription}}/>
       <br/>
       <div className={"Gems"}>
-      {item.gems && item.gems.map((gem, i) =>
-        <div className="Gem" key={`${props.heroIndex}-${gem.item.slug}-${i}`}><img src={`http://media.blizzard.com/d3/icons/items/small/${gem.item.icon}.png`}/>{`${gem.attributes}`}</div>)}
+        {item.gems && item.gems.map((gem, i) =>
+          <div className="Gem" key={`${props.heroIndex}-${gem.item.slug}-${i}`}><img
+            src={`http://media.blizzard.com/d3/icons/items/small/${gem.item.icon}.png`}/>{`${gem.attributes}`}</div>)}
       </div>
     </div>
   );
