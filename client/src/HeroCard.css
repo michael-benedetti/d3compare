@@ -1,14 +1,9 @@
-.Selector {
-    display: block;
-    padding: 20px;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    border-radius: 20px;
-    margin-bottom: 20px;
-}
-
 .Hero {
     width: 250px;
+}
+
+.HeroName {
+    font-family: exocet-blizzard-light;
 }
 
 .HeroCard {

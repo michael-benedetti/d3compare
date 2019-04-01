@@ -1,27 +1,19 @@
 import * as  React from 'react';
 import './HeroCard.css';
 import {
-  AccessToken,
-  AuthRepository,
-  BasicHeroData,
-  D3Repository,
   DetailedHeroData,
-  DetailedItems,
-  Profile
+  Profile, Skill
 } from "./interfaces";
-import GearItem from "./GearItem";
-import {useContext, useEffect, useState} from "react";
-import {Select} from "@material-ui/core";
-import Button from "@material-ui/core/Button";
-import Input from "@material-ui/core/Input";
+import {useContext, useState} from "react";
 import Card from "@material-ui/core/Card";
 import {AppContext, IAppContext} from "./App";
+import {startCase} from "./helpers";
+import HeroInfo from "./HeroInfo";
+import HeroGrid from "./HeroGrid";
+import HeroSelector from "./HeroSelector";
 
 interface HeroCardProps {
-  authRepository: AuthRepository;
-  d3Repository: D3Repository;
   account: string;
-  heroid: string;
   heroIndex: number;
   handleGearMouseEnter: (gearSpot: string) => void;
   gearSpotTooltip: string;
@@ -29,118 +21,50 @@ interface HeroCardProps {
 
 function HeroCard(props: HeroCardProps) {
   const [hero, setHero] = useState<DetailedHeroData>();
-  const [items, setItems] = useState<DetailedItems>();
-  const [profileInput, setProfileInput] = useState<string>("");
-  const [profile, setProfile] = useState<Profile>();
-  const [heroInput, setHeroInput] = useState<string>("");
-  const [accessToken, setAccessToken] = useState<AccessToken>({});
+  const [profile, setProfile] = useState<Profile>({battleTag: "Demospheus#1879"});
 
   const appContext = useContext<IAppContext>(AppContext);
-
-  const fetchAccessToken = async () => {
-    const fetchedAccessToken: AccessToken = await props.authRepository.getAccessToken();
-    setAccessToken(fetchedAccessToken);
-  };
-
-  useEffect(() => {
-    setHeroInput(props.heroid);
-    setProfileInput(props.account);
-    fetchAccessToken();
-  }, []);
-
-  function handleProfileChange(event: any) {
-    setProfileInput(event.target.value);
-  }
-
-  function handleHeroChange(event: any) {
-    setHeroInput(event.target.value);
-  }
-
-  async function fetchProfile() {
-    const fetchedProfile: Profile = await props.d3Repository.getProfile(profileInput, accessToken);
-    setProfile(fetchedProfile);
-  }
-
-  async function fetchHero() {
-    const fetchedHero: DetailedHeroData = await props.d3Repository.getHero(profileInput, heroInput, accessToken);
-    const fetchedItems: DetailedItems = await props.d3Repository.getDetailedItems(profileInput, heroInput, accessToken);
-
-    setHero(fetchedHero);
-    setItems(fetchedItems);
-  }
 
   function handleGearMouseEnter(gearSpot: string) {
     props.handleGearMouseEnter(gearSpot);
   }
 
-  function startCase(stat: string) {
-    const result = stat.replace(/([A-Z])/g, " $1");
-    return result.charAt(0).toUpperCase() + result.slice(1);
+  function handleHeroChange(newHero: DetailedHeroData) {
+    setHero(newHero);
   }
 
   return (
     <>
       <div className={"HeroCard"}>
-        <Card className="Selector">
-          <Input value={profileInput} onChange={handleProfileChange}/>
-          <br/>
-          <Button onClick={fetchProfile}>submit</Button>
-          <br/>
-          {profile && (
-            <>
-              <Select
-                native
-                value={heroInput}
-                onChange={handleHeroChange}
-              >
-                <option/>
-                {profile.heroes && profile.heroes.map((hero: BasicHeroData) => {
-                  return (
-                    <option
-                      key={hero.id}
-                      value={hero.id}
-                    >
-                      {`${hero.name} (${hero.class})`}
-                    </option>
-                  )
-                })}
-              </Select>
-              <br/>
-              <Button onClick={fetchHero}>submit</Button>
-            </>
-          )}
-        </Card>
-        {hero && items && (
+        <HeroSelector
+          initialAccount={props.account}
+          setProfile={setProfile}
+          handleHeroChange={handleHeroChange}
+          profile={profile}
+        />
+        {hero && profile && (
           <div className="Hero">
-            {hero && hero.name}
-            <div className={"HeroGrid"}>
-              {Object.keys(items).map((item: string, i) => {
-                return (
-                  <GearItem
-                    key={`${props.heroIndex}-${item}`}
-                    heroIndex={props.heroIndex}
-                    hero={hero}
-                    gearSpot={item}
-                    detailedItem={items[item]}
-                    handleGearMouseEnter={handleGearMouseEnter}
-                    gearSpotTooltip={props.gearSpotTooltip}
-                  />
-                );
-              })}
-            </div>
+            <HeroInfo hero={hero}/>
+            <HeroGrid
+              profile={profile.battleTag || ""}
+              heroIndex={props.heroIndex}
+              hero={hero}
+              handleGearMouseEnter={handleGearMouseEnter}
+              gearSpotTooltip={props.gearSpotTooltip}
+            />
             <div className={"Skills"}>
-              {hero.skills.active.map((skill, i) =>
-                <div className={`p${i}`}>
-                  <a className={`Skill p${i}`} key={skill.skill.slug}
+              {hero.skills.active.map((skill: Skill, i: number) =>
+                <div key={`${props.heroIndex}-${skill.skill.slug}`} className={`p${i}`}>
+                  <a className={`Skill p${i}`}
                      href={`https://us.diablo3.com/en${skill.skill.tooltipUrl}`}>
                     <img alt={skill.skill.slug}
                          src={`http://media.blizzard.com/d3/icons/skills/42/${skill.skill.icon}.png`}/>
                   </a>
                 </div>
               )}
-              {hero.skills.passive.map((skill, i) =>
-                <div className={`s${i}`}>
-                  <a key={skill.skill.slug} href={`https://us.diablo3.com/en${skill.skill.tooltipUrl}`}>
+              {hero.skills.passive.map((skill: Skill, i: number) =>
+                <div key={`${props.heroIndex}-${skill.skill.slug}`} className={`s${i}`}>
+                  <a href={`https://us.diablo3.com/en${skill.skill.tooltipUrl}`}>
                     <img alt={skill.skill.slug}
                          src={`http://media.blizzard.com/d3/icons/skills/42/${skill.skill.icon}.png`}/>
                   </a>

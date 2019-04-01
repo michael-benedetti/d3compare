@@ -267,7 +267,7 @@ export interface Merchant {
 }
 
 export interface Profile {
-  battleTag?: string;
+  battleTag: string;
   paragonLevel?: number;
   paragonLevelHardcore?: number;
   paragonLevelSeason?: number;
