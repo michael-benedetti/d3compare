@@ -10,6 +10,7 @@ import HeroGrid from "./HeroGrid";
 import HeroSelector from "./HeroSelector";
 import HeroSkills from "./HeroSkills";
 import HeroStats from "./HeroStats";
+import HeroLegendaryPowers from "./HeroLegendaryPowers";
 
 interface HeroCardProps {
   account: string;
@@ -52,6 +53,9 @@ function HeroCard(props: HeroCardProps) {
             <HeroSkills
               hero={hero}
               heroIndex={props.heroIndex}
+            />
+            <HeroLegendaryPowers
+              hero={hero}
             />
             <HeroStats hero={hero}/>
           </div>
