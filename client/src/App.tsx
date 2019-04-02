@@ -64,7 +64,7 @@ function App(props: AppProps) {
 
   useEffect(() => {
     fetchAccessToken();
-  });
+  }, []);
 
   function handleGearMouseEnter(gearSpot: string) {
     setGearSpotToolTipVisible(gearSpot);
