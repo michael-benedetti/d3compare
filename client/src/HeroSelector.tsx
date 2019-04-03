@@ -2,7 +2,7 @@ import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
 import {Select} from "@material-ui/core";
 import "./HeroSelector.css";
-import {BasicHeroData, DetailedHeroData, Profile} from "./interfaces";
+import {BasicHeroData, DetailedHeroData, HeroIdentifier, Profile} from "./interfaces";
 import Card from "@material-ui/core/Card";
 import * as React from "react";
 import {useState} from "react";
@@ -13,12 +13,12 @@ interface HeroSelectorProps {
   profile: Profile;
   setProfile: any;
   handleHeroChange: (newHero: DetailedHeroData) => void;
-  initialAccount: string;
+  initialHero: HeroIdentifier;
 }
 
 function HeroSelector(props: HeroSelectorProps) {
-  const [profileInput, setProfileInput] = useState<string>(props.initialAccount);
-  const [heroInput, setHeroInput] = useState<string>("");
+  const [profileInput, setProfileInput] = useState<string>(props.initialHero.account);
+  const [heroInput, setHeroInput] = useState<string>(props.initialHero.heroId);
 
   const appContext = useContext<IAppContext>(AppContext);
 
@@ -51,6 +51,7 @@ function HeroSelector(props: HeroSelectorProps) {
       {props.profile.heroes && (
         <>
           <Select
+            id={"heroInput"}
             native
             value={heroInput}
             onChange={handleHeroChange}

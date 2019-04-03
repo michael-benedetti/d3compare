@@ -1,19 +1,20 @@
 import * as  React from 'react';
 import './HeroCard.css';
 import {
-  DetailedHeroData,
+  DetailedHeroData, HeroIdentifier,
   Profile
 } from "./interfaces";
-import {useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import HeroInfo from "./HeroInfo";
 import HeroGrid from "./HeroGrid";
 import HeroSelector from "./HeroSelector";
 import HeroSkills from "./HeroSkills";
 import HeroStats from "./HeroStats";
 import HeroLegendaryPowers from "./HeroLegendaryPowers";
+import {AppContext} from "./App";
 
 interface HeroCardProps {
-  account: string;
+  hero: HeroIdentifier;
   heroIndex: number;
   handleGearMouseEnter: (gearSpot: string) => void;
   gearSpotTooltip: string;
@@ -21,7 +22,9 @@ interface HeroCardProps {
 
 function HeroCard(props: HeroCardProps) {
   const [hero, setHero] = useState<DetailedHeroData>();
-  const [profile, setProfile] = useState<Profile>({battleTag: "Demospheus#1879"});
+  const [profile, setProfile] = useState<Profile>({battleTag: ""});
+
+  const appContext = useContext(AppContext);
 
   function handleGearMouseEnter(gearSpot: string) {
     props.handleGearMouseEnter(gearSpot);
@@ -31,11 +34,26 @@ function HeroCard(props: HeroCardProps) {
     setHero(newHero);
   }
 
+  async function fetchProfile() {
+    const fetchedProfile: Profile = await appContext.d3Repository.getProfile(props.hero.account, appContext.accessToken);
+    setProfile(fetchedProfile);
+  }
+
+  async function fetchHero() {
+    const fetchedHero: DetailedHeroData = await appContext.d3Repository.getHero(props.hero.account, props.hero.heroId, appContext.accessToken);
+    setHero(fetchedHero);
+  }
+
+  useEffect(() => {
+    fetchProfile();
+    fetchHero();
+  }, []);
+
   return (
     <>
       <div className={"HeroCard"}>
         <HeroSelector
-          initialAccount={props.account}
+          initialHero={props.hero}
           setProfile={setProfile}
           handleHeroChange={handleHeroChange}
           profile={profile}

@@ -7,7 +7,8 @@ export interface AccessToken {
 export interface D3Repository {
   getProfile: (profile: string, accessToken: AccessToken) => Promise<any>;
   getHero: (account: string, heroId: string, accessToken: AccessToken) => Promise<any>;
-  getDetailedItems: (account: string, heroId: string, accessToken: any) => Promise<any>;
+  getDetailedItems: (account: string, heroId: string, accessToken: AccessToken) => Promise<any>;
+  getLeaderboard: (season: string, leaderboard: string, accessToken: AccessToken) => Promise<any>;
 }
 
 export interface AuthRepository {
@@ -293,4 +294,21 @@ export interface Profile {
   blacksmithSeasonHardcore?: Merchant;
   jewelerSeasonHardcore?: Merchant;
   mysticSeasonHardcore?: Merchant;
+}
+
+export interface Player {
+  key: string;
+  accountId: number;
+  data: any[]
+}
+
+export interface Leader {
+  player: Player[];
+  order: number;
+  data: any[];
+}
+
+export interface Leaderboard {
+  links: any;
+  row: Leader[];
 }

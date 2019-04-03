@@ -1,6 +1,6 @@
 import * as  React from 'react';
 import './App.css';
-import {AccessToken, AuthRepository, D3Repository, HeroIdentifier} from "./interfaces";
+import {AccessToken, AuthRepository, D3Repository, HeroIdentifier, Leaderboard} from "./interfaces";
 import HeroCard from "./HeroCard";
 import {useEffect, useState} from "react";
 import {Button} from "@material-ui/core";
@@ -18,16 +18,16 @@ const theme = createMuiTheme({
     type: 'dark',
   },
   overrides: {
-   MuiTooltip: {
-     tooltip: {
-       fontSize: "14px",
-       display: "inline-block",
-       backgroundColor: "black",
-       padding: "10px",
-       border: "2px solid #444433",
-       boxShadow: "2px 2px 2px black",
-     },
-   }
+    MuiTooltip: {
+      tooltip: {
+        fontSize: "14px",
+        display: "inline-block",
+        backgroundColor: "black",
+        padding: "10px",
+        border: "2px solid #444433",
+        boxShadow: "2px 2px 2px black",
+      },
+    }
   }
 });
 
@@ -45,7 +45,12 @@ export const AppContext = React.createContext<IAppContext>({
   setSelectedStat: () => {},
   accessToken: {},
   authRepository: {getAccessToken: () => Promise.resolve("")},
-  d3Repository: {getProfile: () => Promise.resolve({}), getHero: () => Promise.resolve({}), getDetailedItems: () => Promise.resolve({})}
+  d3Repository: {
+    getProfile: () => Promise.resolve({}),
+    getHero: () => Promise.resolve({}),
+    getDetailedItems: () => Promise.resolve({}),
+    getLeaderboard: () => Promise.resolve({})
+  }
 });
 
 function App(props: AppProps) {
@@ -70,11 +75,20 @@ function App(props: AppProps) {
     setGearSpotToolTipVisible(gearSpot);
   }
 
-  function handleAddHero() {
+  function handleAddHero(newHero: HeroIdentifier) {
     if (heros.length >= 4) {
       return;
     }
-    setHeros([...heros, {account: "", heroId: ""}]);
+    setHeros([...heros, newHero]);
+  }
+
+  async function handleAddRandomHero() {
+    const leaders: Leaderboard = await props.d3Repository.getLeaderboard("16", "rift-wizard", accessToken);
+    const heroData = leaders.row[Math.floor(Math.random() * leaders.row.length)].player[0].data;
+    const battleTag = heroData[0]["string"];
+    const heroId = heroData[8]["number"];
+
+    handleAddHero({account: battleTag, heroId});
   }
 
   function handleSelectedStatChange(stat: string) {
@@ -95,12 +109,22 @@ function App(props: AppProps) {
         <div className="App">
           <div>
             {heros.length < 4 &&
-            <Button
-              onClick={handleAddHero}
-              style={{padding: "5px", width: "130px", fontFamily: "exocet-blizzard-light", fontSize: "20px"}}
-            >
-              Add Hero
-            </Button>}
+            <>
+              <Button
+                onClick={() => handleAddHero({account: "", heroId: ""})}
+                style={{padding: "5px", width: "130px", fontFamily: "exocet-blizzard-light", fontSize: "20px"}}
+              >
+                Add Hero
+              </Button>
+              <br/>
+              <Button
+                onClick={handleAddRandomHero}
+                style={{padding: "5px", width: "235px", fontFamily: "exocet-blizzard-light", fontSize: "20px"}}
+              >
+                Add Random Hero
+              </Button>
+            </>
+            }
             <br/>
             <br/>
             <div className={"Heros"}>
@@ -109,7 +133,7 @@ function App(props: AppProps) {
                   <HeroCard
                     heroIndex={i}
                     key={i}
-                    account={hero.account}
+                    hero={hero}
                     handleGearMouseEnter={handleGearMouseEnter}
                     gearSpotTooltip={gearSpotTooltipVisible}
                   />

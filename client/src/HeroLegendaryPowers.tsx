@@ -12,7 +12,8 @@ function HeroLegendaryPowers(props: HeroLegendaryPowersProps) {
         display: "flex",
         position: "relative",
         flexDirection: "row",
-        marginBottom: "20px"
+        marginBottom: "20px",
+        height: "134px",
       }}
       className="LegendaryPowers"
     >
