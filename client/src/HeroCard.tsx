@@ -45,8 +45,10 @@ function HeroCard(props: HeroCardProps) {
   }
 
   useEffect(() => {
-    fetchProfile();
-    fetchHero();
+    if (props.hero.account && props.hero.heroId) {
+      fetchProfile();
+      fetchHero();
+    }
   }, []);
 
   return (
