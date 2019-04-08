@@ -1,8 +1,8 @@
 import * as  React from 'react';
+import {useEffect, useState} from 'react';
 import './App.css';
-import {AccessToken, AuthRepository, D3Repository, HeroIdentifier, Leaderboard} from "./interfaces";
+import {AccessToken, AuthRepository, D3Repository, HeroIdentifier, Leaderboard, LeaderData} from "./interfaces";
 import HeroCard from "./HeroCard";
-import {useEffect, useState} from "react";
 import {Button} from "@material-ui/core";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
@@ -86,9 +86,10 @@ function App(props: AppProps) {
     const leaderboardTypes = ["hardcore-barbarian", "barbarian", "hardcore-crusader", "crusader", "hardcore-dh", "dh", "hardcore-monk", "monk", "hardcore-wd", "wd", "hardcore-wizard", "wizard"];
     const leaderboardType = leaderboardTypes[Math.floor(Math.random()*leaderboardTypes.length)];
     const leaders: Leaderboard = await props.d3Repository.getLeaderboard("16", `rift-${leaderboardType}`, accessToken);
-    const heroData = leaders.row[Math.floor(Math.random() * leaders.row.length)].player[0].data;
-    const battleTag = heroData[0]["string"];
-    const heroId = heroData[8]["number"];
+    const heroData: LeaderData[] = leaders.row[Math.floor(Math.random() * leaders.row.length)].player[0].data;
+    console.log(heroData);
+    const battleTag: string = heroData.find((data: LeaderData) => data.id === "HeroBattleTag")!.string || "";
+    const heroId: string = heroData.find((data: LeaderData) => data.id === "HeroId")!.number!.toString() || "";
 
     handleAddHero({account: battleTag, heroId});
   }

@@ -1,8 +1,9 @@
-import {DetailedHeroData} from "./interfaces";
+import {DetailedHeroData, LegendaryPower} from "./interfaces";
 import * as  React from 'react';
 
 interface HeroLegendaryPowersProps {
   hero: DetailedHeroData;
+  heroIndex: number;
 }
 
 function HeroLegendaryPowers(props: HeroLegendaryPowersProps) {
@@ -17,9 +18,9 @@ function HeroLegendaryPowers(props: HeroLegendaryPowersProps) {
       }}
       className="LegendaryPowers"
     >
-      {props.hero.legendaryPowers.map((legendaryPower) => {
+      {props.hero.legendaryPowers.map((legendaryPower: LegendaryPower, i: number) => {
         return (
-          <div style={{
+          <div key={`legendaryPower-${props.heroIndex}-${i}`} style={{
             margin: "auto",
             backgroundImage: "url(https://us.diablo3.com/static/images/icons/Active-Default.png)",
             backgroundRepeat: "no-repeat",

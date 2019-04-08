@@ -305,7 +305,13 @@ export interface Player {
 export interface Leader {
   player: Player[];
   order: number;
-  data: any[];
+  data: LeaderData[];
+}
+
+export interface LeaderData {
+  id: string,
+  number?: number,
+  string?: string,
 }
 
 export interface Leaderboard {

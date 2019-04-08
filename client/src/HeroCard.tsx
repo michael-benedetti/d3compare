@@ -76,6 +76,7 @@ function HeroCard(props: HeroCardProps) {
             />
             <HeroLegendaryPowers
               hero={hero}
+              heroIndex={props.heroIndex}
             />
             <HeroStats hero={hero}/>
           </div>
