@@ -58,8 +58,8 @@ function App(props: AppProps) {
   const [selectedStat, setSelectedStat] = useState<string>("");
   const [accessToken, setAccessToken] = useState<AccessToken>({});
   const [heros, setHeros] = useState<HeroIdentifier[]>([
-    {account: "Demospheus#1879", heroId: ""},
-    {account: "Sammo#1931", heroId: ""}
+    // {account: "Demospheus#1879", heroId: ""},
+    // {account: "Sammo#1931", heroId: ""}
   ]);
 
   const fetchAccessToken = async () => {
@@ -83,7 +83,9 @@ function App(props: AppProps) {
   }
 
   async function handleAddRandomHero() {
-    const leaders: Leaderboard = await props.d3Repository.getLeaderboard("16", "rift-wizard", accessToken);
+    const leaderboardTypes = ["hardcore-barbarian", "barbarian", "hardcore-crusader", "crusader", "hardcore-dh", "dh", "hardcore-monk", "monk", "hardcore-wd", "wd", "hardcore-wizard", "wizard"];
+    const leaderboardType = leaderboardTypes[Math.floor(Math.random()*leaderboardTypes.length)];
+    const leaders: Leaderboard = await props.d3Repository.getLeaderboard("16", `rift-${leaderboardType}`, accessToken);
     const heroData = leaders.row[Math.floor(Math.random() * leaders.row.length)].player[0].data;
     const battleTag = heroData[0]["string"];
     const heroId = heroData[8]["number"];
