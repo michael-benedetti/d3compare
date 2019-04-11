@@ -41,7 +41,8 @@ function HeroCard(props: HeroCardProps) {
 
   async function fetchHero() {
     const fetchedHero: DetailedHeroData = await appContext.d3Repository.getHero(props.hero.account, props.hero.heroId, appContext.accessToken);
-    setHero(fetchedHero);
+    if (fetchedHero.code !== "NOTFOUND")
+      setHero(fetchedHero);
   }
 
   useEffect(() => {

@@ -223,6 +223,8 @@ export interface Stats {
 }
 
 export interface DetailedHeroData {
+  code?: string;
+  reason?: string;
   id: number;
   name: string;
   class: string;

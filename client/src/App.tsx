@@ -87,7 +87,6 @@ function App(props: AppProps) {
     const leaderboardType = leaderboardTypes[Math.floor(Math.random()*leaderboardTypes.length)];
     const leaders: Leaderboard = await props.d3Repository.getLeaderboard("16", `rift-${leaderboardType}`, accessToken);
     const heroData: LeaderData[] = leaders.row[Math.floor(Math.random() * leaders.row.length)].player[0].data;
-    console.log(heroData);
     const battleTag: string = heroData.find((data: LeaderData) => data.id === "HeroBattleTag")!.string || "";
     const heroId: string = heroData.find((data: LeaderData) => data.id === "HeroId")!.number!.toString() || "";
 
