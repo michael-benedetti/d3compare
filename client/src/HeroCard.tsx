@@ -18,6 +18,7 @@ interface HeroCardProps {
   heroIndex: number;
   handleGearMouseEnter: (gearSpot: string) => void;
   gearSpotTooltip: string;
+  handleRemoveHero: (heroIndex: number) => void;
 }
 
 function HeroCard(props: HeroCardProps) {
@@ -56,6 +57,8 @@ function HeroCard(props: HeroCardProps) {
     <>
       <div className={"HeroCard"}>
         <HeroSelector
+          heroIndex={props.heroIndex}
+          handleRemoveHero={props.handleRemoveHero}
           initialHero={props.hero}
           setProfile={setProfile}
           handleHeroChange={handleHeroChange}

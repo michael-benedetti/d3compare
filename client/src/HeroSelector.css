@@ -1,6 +1,7 @@
 .Selector {
     display: block;
-    padding: 20px;
+    height: 185px;
+    padding: 10px;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     border-radius: 20px;

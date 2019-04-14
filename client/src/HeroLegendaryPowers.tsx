@@ -20,7 +20,7 @@ function HeroLegendaryPowers(props: HeroLegendaryPowersProps) {
     >
       {props.hero.legendaryPowers.map((legendaryPower: LegendaryPower, i: number) => {
         return (
-          <div key={`legendaryPower-${props.heroIndex}-${i}`} style={{
+          <div key={`legendaryPower-${props.hero.id}-${legendaryPower.id}`} style={{
             margin: "auto",
             backgroundImage: "url(https://us.diablo3.com/static/images/icons/Active-Default.png)",
             backgroundRepeat: "no-repeat",

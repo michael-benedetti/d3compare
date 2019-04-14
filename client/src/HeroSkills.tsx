@@ -10,7 +10,7 @@ function HeroSkills(props: HeroSkillsProps) {
   return (
     <div className={"Skills"}>
       {props.hero.skills.active.map((skill: Skill, i: number) =>
-        <div key={`${props.heroIndex}-${skill.skill.slug}`} className={`p${i}`}>
+        <div key={`${props.hero.id}-${skill.skill.slug}`} className={`p${i}`}>
           <a className={`Skill p${i}`}
              href={`https://us.diablo3.com/en${skill.skill.tooltipUrl}`}>
             <img alt={skill.skill.slug}
@@ -19,7 +19,7 @@ function HeroSkills(props: HeroSkillsProps) {
         </div>
       )}
       {props.hero.skills.passive.map((skill: Skill, i: number) =>
-        <div key={`${props.heroIndex}-${skill.skill.slug}`} className={`s${i}`}>
+        <div key={`${props.hero.id}-${skill.skill.slug}`} className={`s${i}`}>
           <a href={`https://us.diablo3.com/en${skill.skill.tooltipUrl}`}>
             <img alt={skill.skill.slug}
                  src={`http://media.blizzard.com/d3/icons/skills/42/${skill.skill.icon}.png`}/>

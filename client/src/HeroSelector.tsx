@@ -1,19 +1,23 @@
-import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
-import {Select} from "@material-ui/core";
+import Close from "@material-ui/icons/Close";
 import "./HeroSelector.css";
 import {BasicHeroData, DetailedHeroData, HeroIdentifier, Profile} from "./interfaces";
 import Card from "@material-ui/core/Card";
 import * as React from "react";
-import {useState} from "react";
+import {Dispatch, SetStateAction, useState} from "react";
 import {useContext} from "react";
 import {AppContext, IAppContext} from "./App";
+import IconButton from "@material-ui/core/IconButton";
+import TextField from "@material-ui/core/TextField";
+import {MenuItem} from "@material-ui/core";
 
 interface HeroSelectorProps {
   profile: Profile;
-  setProfile: any;
+  setProfile: Dispatch<SetStateAction<Profile>>;
   handleHeroChange: (newHero: DetailedHeroData) => void;
   initialHero: HeroIdentifier;
+  heroIndex: number;
+  handleRemoveHero: (heroIndex: number) => void;
 }
 
 function HeroSelector(props: HeroSelectorProps) {
@@ -44,32 +48,39 @@ function HeroSelector(props: HeroSelectorProps) {
 
   return (
     <Card className="Selector">
-      <Input value={profileInput} onChange={handleProfileChange}/>
+      <div style={{display: "flex", justifyContent: "right"}}>
+        <IconButton style={{padding: "5px"}} onClick={() => props.handleRemoveHero(props.heroIndex)}><Close fontSize={"small"}/></IconButton>
+      </div>
+      <TextField
+        label="Battle Tag"
+        value={profileInput}
+        onChange={handleProfileChange}
+      />
       <br/>
       <Button onClick={fetchProfile}>submit</Button>
       <br/>
-      {props.profile.heroes && (
-        <>
-          <Select
-            id={"heroInput"}
-            native
-            value={heroInput}
-            onChange={handleHeroChange}
-          >
-            <option/>
-            {props.profile.heroes && props.profile.heroes.map((hero: BasicHeroData) => {
-              return (
-                <option
-                  key={hero.id}
-                  value={hero.id}
-                >
-                  {`${hero.name} (${hero.class})`}
-                </option>
-              )
-            })}
-          </Select>
-        </>
-      )}
+      <>
+        <TextField
+          select
+          label="Hero"
+          id="heroInput"
+          value={heroInput}
+          onChange={handleHeroChange}
+          disabled={!props.profile.battleTag}
+          style={{width: "90%"}}
+        >
+          {props.profile.heroes && props.profile.heroes.map((hero: BasicHeroData) => {
+            return (
+              <MenuItem
+                key={hero.id}
+                value={hero.id}
+              >
+                {`${hero.name} (${hero.class})`}
+              </MenuItem>
+            )
+          })}
+        </TextField>
+      </>
     </Card>
   )
 }

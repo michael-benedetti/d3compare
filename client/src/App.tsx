@@ -7,7 +7,6 @@ import {Button} from "@material-ui/core";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 
-
 interface AppProps {
   authRepository: AuthRepository;
   d3Repository: D3Repository;
@@ -82,9 +81,13 @@ function App(props: AppProps) {
     setHeros([...heros, newHero]);
   }
 
+  async function handleRemoveHero(heroIndex: number) {
+    setHeros(heros.filter((hero, i) => i !== heroIndex));
+  }
+
   async function handleAddRandomHero() {
     const leaderboardTypes = ["hardcore-barbarian", "barbarian", "hardcore-crusader", "crusader", "hardcore-dh", "dh", "hardcore-monk", "monk", "hardcore-wd", "wd", "hardcore-wizard", "wizard"];
-    const leaderboardType = leaderboardTypes[Math.floor(Math.random()*leaderboardTypes.length)];
+    const leaderboardType = leaderboardTypes[Math.floor(Math.random() * leaderboardTypes.length)];
     const leaders: Leaderboard = await props.d3Repository.getLeaderboard("16", `rift-${leaderboardType}`, accessToken);
     const heroData: LeaderData[] = leaders.row[Math.floor(Math.random() * leaders.row.length)].player[0].data;
     const battleTag: string = heroData.find((data: LeaderData) => data.id === "HeroBattleTag")!.string || "";
@@ -110,11 +113,11 @@ function App(props: AppProps) {
       >
         <div className="App">
           <div>
-            {heros.length < 4 &&
             <>
               <Button
                 onClick={() => handleAddHero({account: "", heroId: ""})}
                 style={{padding: "5px", width: "130px", fontFamily: "exocet-blizzard-light", fontSize: "20px"}}
+                disabled={heros.length >= 4}
               >
                 Add Hero
               </Button>
@@ -122,11 +125,11 @@ function App(props: AppProps) {
               <Button
                 onClick={handleAddRandomHero}
                 style={{padding: "5px", width: "235px", fontFamily: "exocet-blizzard-light", fontSize: "20px"}}
+                disabled={heros.length >= 4}
               >
                 Add Random Hero
               </Button>
             </>
-            }
             <br/>
             <br/>
             <div className={"Heros"}>
@@ -134,10 +137,11 @@ function App(props: AppProps) {
                 return (
                   <HeroCard
                     heroIndex={i}
-                    key={i}
+                    key={`heroCard-${hero.heroId}`}
                     hero={hero}
                     handleGearMouseEnter={handleGearMouseEnter}
                     gearSpotTooltip={gearSpotTooltipVisible}
+                    handleRemoveHero={handleRemoveHero}
                   />
                 )
               })}
