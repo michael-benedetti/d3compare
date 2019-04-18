@@ -19,7 +19,7 @@ function HeroGrid(props: HeroGridProps) {
   const appContext = useContext<IAppContext>(AppContext);
 
   async function fetchItems() {
-    const fetchedItems: DetailedItems = await appContext.d3Repository.getDetailedItems(props.profile, props.hero.id.toString(), appContext.accessToken);
+    const fetchedItems: DetailedItems = await appContext.d3Repository.getDetailedItems(props.profile, props.hero.id.toString());
     setItems(fetchedItems);
   }
 

@@ -5,19 +5,16 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-@RestController
-@RequestMapping("auth")
-public class AuthController {
+
+class AuthService {
     @Value("${D3_CLIENT_ID}")
     private String clientId;
     @Value("${D3_CLIENT_SECRET}")
     private String clientSecret;
 
-    @GetMapping
-    public BlizzardAccessToken getAccessToken() {
+    BlizzardAccessToken getAccessToken() {
         RestTemplate restTemplate = new RestTemplate();
         String authEndpoint = "https://us.battle.net/oauth/token";
 

@@ -36,12 +36,12 @@ function HeroCard(props: HeroCardProps) {
   }
 
   async function fetchProfile() {
-    const fetchedProfile: Profile = await appContext.d3Repository.getProfile(props.hero.account, appContext.accessToken);
+    const fetchedProfile: Profile = await appContext.d3Repository.getProfile(props.hero.account);
     setProfile(fetchedProfile);
   }
 
   async function fetchHero() {
-    const fetchedHero: DetailedHeroData = await appContext.d3Repository.getHero(props.hero.account, props.hero.heroId, appContext.accessToken);
+    const fetchedHero: DetailedHeroData = await appContext.d3Repository.getHero(props.hero.account, props.hero.heroId);
     if (fetchedHero.code !== "NOTFOUND")
       setHero(fetchedHero);
   }

@@ -1,23 +1,23 @@
-import {AccessToken, D3Repository, Leaderboard} from "./interfaces";
+import {D3Repository, Leaderboard} from "./interfaces";
 
 export class HttpD3Repository implements D3Repository {
-  public async getProfile(account: string, accessToken: AccessToken) {
-    const fetchedProfile = await fetch(`https://us.api.blizzard.com/d3/profile/${this.sanitize(account)}/?locale=en_US&access_token=${accessToken["access_token"]}`);
+  public async getProfile(account: string) {
+    const fetchedProfile = await fetch(`/api/v1/getProfile?profile=${this.sanitize(account)}`);
     return await fetchedProfile.json();
   }
 
-  public async getHero(account: string, heroId: string, accessToken: AccessToken) {
-    const hero = await fetch(`https://us.api.blizzard.com/d3/profile/${this.sanitize(account)}/hero/${heroId}?locale=en_US&access_token=${accessToken["access_token"]}`);
+  public async getHero(account: string, heroId: string) {
+    const hero = await fetch(`/api/v1/getHero?profile=${this.sanitize(account)}&heroId=${heroId}`);
     return await hero.json();
   }
 
-  public async getDetailedItems(account: string, heroId: string, accessToken: AccessToken) {
-    const detailedItems = await fetch(`https://us.api.blizzard.com/d3/profile/${this.sanitize(account)}/hero/${heroId}/items?locale=en_US&access_token=${accessToken["access_token"]}`);
+  public async getDetailedItems(account: string, heroId: string) {
+    const detailedItems = await fetch(`/api/v1/getDetailedItems?profile=${this.sanitize(account)}&heroId=${heroId}`);
     return await detailedItems.json();
   }
 
-  public async getLeaderboard(season: string, leaderboard: string, accessToken: AccessToken): Promise<Leaderboard> {
-    const leaders = await fetch(`https://us.api.blizzard.com/data/d3/season/${season}/leaderboard/${leaderboard}?access_token=${accessToken["access_token"]}`);
+  public async getLeaderboard(season: string, leaderboard: string): Promise<Leaderboard> {
+    const leaders = await fetch(`/api/v1/getLeaderboard?season=${season}&leaderboard=${leaderboard}`);
     return await leaders.json();
   }
 

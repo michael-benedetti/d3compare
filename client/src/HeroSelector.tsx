@@ -37,12 +37,12 @@ function HeroSelector(props: HeroSelectorProps) {
   }
 
   async function fetchProfile() {
-    const fetchedProfile: Profile = await appContext.d3Repository.getProfile(profileInput, appContext.accessToken);
+    const fetchedProfile: Profile = await appContext.d3Repository.getProfile(profileInput);
     props.setProfile(fetchedProfile);
   }
 
   async function fetchHero(hero: string) {
-    const fetchedHero: DetailedHeroData = await appContext.d3Repository.getHero(profileInput, hero, appContext.accessToken);
+    const fetchedHero: DetailedHeroData = await appContext.d3Repository.getHero(profileInput, hero);
     props.handleHeroChange(fetchedHero);
   }
 
