@@ -1,9 +1,7 @@
 package local.home.d3;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
@@ -16,44 +14,56 @@ public class D3Controller {
     private AuthService authService;
     private LocalDateTime tokenExpire;
 
+    @Value("${D3COMPARE_URL}")
+    private String d3compareUrl;
+
     public D3Controller(AuthService authService) {
         this.authService = authService;
         reAuthenticate();
     }
 
     @GetMapping("/getProfile")
-    public Object getProfile(@RequestParam(value = "profile") String profile) {
-        validateAccessToken();
-        RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(String.format("https://us.api.blizzard.com/d3/profile/%s/?locale=en_US&access_token=%s", profile, accessToken.getAccessToken()), Object.class);
+    public Object getProfile(@RequestParam(value = "profile") String profile,
+                             @RequestHeader(value = "referer", required = false) String referrer) {
+        String requestUrl = String.format("https://us.api.blizzard.com/d3/profile/%s/?locale=en_US&access_token=%s", profile, accessToken.getAccessToken());
+        return makeGetRequest(requestUrl, referrer);
     }
 
     @GetMapping("/getHero")
     public Object getHero(@RequestParam(value = "profile") String profile,
-                          @RequestParam(value = "heroId") String heroId) {
-        validateAccessToken();
-        RestTemplate restTemplate = new RestTemplate();
-        try {
-            return restTemplate.getForObject(String.format("https://us.api.blizzard.com/d3/profile/%s/hero/%s?locale=en_US&access_token=%s", profile, heroId, accessToken.getAccessToken()), Object.class);
-        } catch (HttpClientErrorException e) {
-            return "";
-        }
+                          @RequestParam(value = "heroId") String heroId,
+                          @RequestHeader(value = "referer", required = false) String referrer) {
+        String requestUrl = String.format("https://us.api.blizzard.com/d3/profile/%s/hero/%s?locale=en_US&access_token=%s", profile, heroId, accessToken.getAccessToken());
+        return makeGetRequest(requestUrl, referrer);
     }
 
     @GetMapping("/getDetailedItems")
     public Object getDetailedItems(@RequestParam(value = "profile") String profile,
-                                   @RequestParam(value = "heroId") String heroId) {
-        validateAccessToken();
-        RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(String.format("https://us.api.blizzard.com/d3/profile/%s/hero/%s/items?locale=en_US&access_token=%s", profile, heroId, accessToken.getAccessToken()), Object.class);
+                                   @RequestParam(value = "heroId") String heroId,
+                                   @RequestHeader(value = "referer", required = false) String referrer) {
+        String requestUrl = String.format("https://us.api.blizzard.com/d3/profile/%s/hero/%s/items?locale=en_US&access_token=%s", profile, heroId, accessToken.getAccessToken());
+        return makeGetRequest(requestUrl, referrer);
     }
 
     @GetMapping("/getLeaderboard")
     public Object getLeaderboard(@RequestParam(value = "season") String season,
-                                 @RequestParam(value = "leaderboard") String leaderboard) {
+                                 @RequestParam(value = "leaderboard") String leaderboard,
+                                 @RequestHeader(value = "referer", required = false) String referrer) {
+        String requestUrl = String.format("https://us.api.blizzard.com/data/d3/season/%s/leaderboard/%s?access_token=%s", season, leaderboard, accessToken.getAccessToken());
+        return makeGetRequest(requestUrl, referrer);
+    }
+
+    private Object makeGetRequest(String requestUrl, String referrer) {
+        if (!d3compareUrl.equals(referrer)) {
+            return "Ah, ah ah!  You didn't say the magic word!";
+        }
         validateAccessToken();
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(String.format("https://us.api.blizzard.com/data/d3/season/%s/leaderboard/%s?access_token=%s", season, leaderboard, accessToken.getAccessToken()), Object.class);
+        try {
+            return restTemplate.getForObject(requestUrl, Object.class);
+        } catch (HttpClientErrorException e) {
+            return "";
+        }
     }
 
     private void validateAccessToken() {
