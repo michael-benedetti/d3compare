@@ -54,7 +54,7 @@ public class D3Controller {
     }
 
     private Object makeGetRequest(String requestUrl, String referrer) {
-        if (!d3compareUrl.equals(referrer)) {
+        if (referrer == null || !referrer.contains(d3compareUrl)) {
             return "Ah, ah ah!  You didn't say the magic word!";
         }
         validateAccessToken();
