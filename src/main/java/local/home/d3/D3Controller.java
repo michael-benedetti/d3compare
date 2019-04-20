@@ -24,24 +24,27 @@ public class D3Controller {
 
     @GetMapping("/getProfile")
     public Object getProfile(@RequestParam(value = "profile") String profile,
+                             @RequestParam(value = "region") String region,
                              @RequestHeader(value = "referer", required = false) String referrer) {
-        String requestUrl = String.format("https://us.api.blizzard.com/d3/profile/%s/?locale=en_US&access_token=%s", profile, accessToken.getAccessToken());
+        String requestUrl = String.format("https://%s.api.blizzard.com/d3/profile/%s/?locale=en_US&access_token=%s", region, profile, accessToken.getAccessToken());
         return makeGetRequest(requestUrl, referrer);
     }
 
     @GetMapping("/getHero")
     public Object getHero(@RequestParam(value = "profile") String profile,
+                          @RequestParam(value = "region") String region,
                           @RequestParam(value = "heroId") String heroId,
                           @RequestHeader(value = "referer", required = false) String referrer) {
-        String requestUrl = String.format("https://us.api.blizzard.com/d3/profile/%s/hero/%s?locale=en_US&access_token=%s", profile, heroId, accessToken.getAccessToken());
+        String requestUrl = String.format("https://%s.api.blizzard.com/d3/profile/%s/hero/%s?locale=en_US&access_token=%s", region, profile, heroId, accessToken.getAccessToken());
         return makeGetRequest(requestUrl, referrer);
     }
 
     @GetMapping("/getDetailedItems")
     public Object getDetailedItems(@RequestParam(value = "profile") String profile,
+                                   @RequestParam(value = "region") String region,
                                    @RequestParam(value = "heroId") String heroId,
                                    @RequestHeader(value = "referer", required = false) String referrer) {
-        String requestUrl = String.format("https://us.api.blizzard.com/d3/profile/%s/hero/%s/items?locale=en_US&access_token=%s", profile, heroId, accessToken.getAccessToken());
+        String requestUrl = String.format("https://%s.api.blizzard.com/d3/profile/%s/hero/%s/items?locale=en_US&access_token=%s", region, profile, heroId, accessToken.getAccessToken());
         return makeGetRequest(requestUrl, referrer);
     }
 
@@ -62,6 +65,8 @@ public class D3Controller {
         try {
             return restTemplate.getForObject(requestUrl, Object.class);
         } catch (HttpClientErrorException e) {
+            System.out.println(e);
+            System.out.println(requestUrl);
             return "";
         }
     }

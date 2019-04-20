@@ -5,13 +5,14 @@ export interface AccessToken {
 }
 
 export interface D3Repository {
-  getProfile: (profile: string) => Promise<any>;
-  getHero: (account: string, heroId: string) => Promise<any>;
-  getDetailedItems: (account: string, heroId: string) => Promise<any>;
+  getProfile: (region: string, profile: string) => Promise<any>;
+  getHero: (region: string, account: string, heroId: string) => Promise<any>;
+  getDetailedItems: (region: string, account: string, heroId: string) => Promise<any>;
   getLeaderboard: (season: string, leaderboard: string) => Promise<any>;
 }
 
 export interface HeroIdentifier {
+  region: string;
   account: string;
   heroId: string;
 }

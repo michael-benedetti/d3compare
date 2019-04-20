@@ -23,6 +23,7 @@ interface HeroCardProps {
 
 function HeroCard(props: HeroCardProps) {
   const [hero, setHero] = useState<DetailedHeroData>();
+  const [heroIdentifier, setHeroIdentifier] = useState<HeroIdentifier>(props.hero);
   const [profile, setProfile] = useState<Profile>({battleTag: ""});
 
   const appContext = useContext(AppContext);
@@ -31,17 +32,18 @@ function HeroCard(props: HeroCardProps) {
     props.handleGearMouseEnter(gearSpot);
   }
 
-  function handleHeroChange(newHero: DetailedHeroData) {
-    setHero(newHero);
+  async function handleHeroChange(region: string, account: string, heroId: string) {
+    setHeroIdentifier({region, account, heroId});
+    setHero(await appContext.d3Repository.getHero(region, account, heroId));
   }
 
   async function fetchProfile() {
-    const fetchedProfile: Profile = await appContext.d3Repository.getProfile(props.hero.account);
+    const fetchedProfile: Profile = await appContext.d3Repository.getProfile(heroIdentifier.region, heroIdentifier.account);
     setProfile(fetchedProfile);
   }
 
   async function fetchHero() {
-    const fetchedHero: DetailedHeroData = await appContext.d3Repository.getHero(props.hero.account, props.hero.heroId);
+    const fetchedHero: DetailedHeroData = await appContext.d3Repository.getHero(heroIdentifier.region, heroIdentifier.account, heroIdentifier.heroId);
     if (fetchedHero.code !== "NOTFOUND")
       setHero(fetchedHero);
   }
@@ -68,7 +70,7 @@ function HeroCard(props: HeroCardProps) {
           <div className="Hero">
             <HeroInfo hero={hero}/>
             <HeroGrid
-              profile={profile.battleTag || ""}
+              heroIdentifier={heroIdentifier || {region: "us", battleTag: "", heroId: ""}}
               heroIndex={props.heroIndex}
               hero={hero}
               handleGearMouseEnter={handleGearMouseEnter}

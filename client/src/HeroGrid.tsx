@@ -1,12 +1,12 @@
 import GearItem from "./GearItem";
 import * as React from "react";
-import {DetailedHeroData, DetailedItems} from "./interfaces";
+import {DetailedHeroData, DetailedItems, HeroIdentifier} from "./interfaces";
 import {useEffect, useState} from "react";
 import {useContext} from "react";
 import {AppContext, IAppContext} from "./App";
 
 interface HeroGridProps {
-  profile: string;
+  heroIdentifier: HeroIdentifier;
   heroIndex: number;
   hero: DetailedHeroData;
   handleGearMouseEnter: (gearspot: string) => void;
@@ -19,7 +19,7 @@ function HeroGrid(props: HeroGridProps) {
   const appContext = useContext<IAppContext>(AppContext);
 
   async function fetchItems() {
-    const fetchedItems: DetailedItems = await appContext.d3Repository.getDetailedItems(props.profile, props.hero.id.toString());
+    const fetchedItems: DetailedItems = await appContext.d3Repository.getDetailedItems(props.heroIdentifier.region, props.heroIdentifier.account, props.hero.id.toString());
     setItems(fetchedItems);
   }
 

@@ -1,7 +1,7 @@
 import Button from "@material-ui/core/Button";
 import Close from "@material-ui/icons/Close";
 import "./HeroSelector.css";
-import {BasicHeroData, DetailedHeroData, HeroIdentifier, Profile} from "./interfaces";
+import {BasicHeroData, HeroIdentifier, Profile} from "./interfaces";
 import Card from "@material-ui/core/Card";
 import * as React from "react";
 import {Dispatch, SetStateAction, useState} from "react";
@@ -14,7 +14,7 @@ import {MenuItem} from "@material-ui/core";
 interface HeroSelectorProps {
   profile: Profile;
   setProfile: Dispatch<SetStateAction<Profile>>;
-  handleHeroChange: (newHero: DetailedHeroData) => void;
+  handleHeroChange: (region: string, account: string, heroId: string) => void;
   initialHero: HeroIdentifier;
   heroIndex: number;
   handleRemoveHero: (heroIndex: number) => void;
@@ -22,9 +22,12 @@ interface HeroSelectorProps {
 
 function HeroSelector(props: HeroSelectorProps) {
   const [profileInput, setProfileInput] = useState<string>(props.initialHero.account);
+  const [regionInput, setRegionInput] = useState<string>("us");
   const [heroInput, setHeroInput] = useState<string>(props.initialHero.heroId);
 
   const appContext = useContext<IAppContext>(AppContext);
+
+  const regions = ["us", "eu", "kr", "tw"];
 
   function handleHeroChange(event: any) {
     const newHero: string = event.target.value;
@@ -36,21 +39,44 @@ function HeroSelector(props: HeroSelectorProps) {
     setProfileInput(event.target.value);
   }
 
+  function handleRegionChange(event: any) {
+    setRegionInput(event.target.value);
+  }
+
   async function fetchProfile() {
-    const fetchedProfile: Profile = await appContext.d3Repository.getProfile(profileInput);
+    const fetchedProfile: Profile = await appContext.d3Repository.getProfile(regionInput, profileInput);
     props.setProfile(fetchedProfile);
   }
 
   async function fetchHero(hero: string) {
-    const fetchedHero: DetailedHeroData = await appContext.d3Repository.getHero(profileInput, hero);
-    props.handleHeroChange(fetchedHero);
+    props.handleHeroChange(regionInput, profileInput, hero);
   }
 
   return (
     <Card className="Selector">
       <div style={{display: "flex", justifyContent: "right"}}>
-        <IconButton style={{padding: "5px"}} onClick={() => props.handleRemoveHero(props.heroIndex)}><Close fontSize={"small"}/></IconButton>
+        <IconButton style={{padding: "5px"}} onClick={() => props.handleRemoveHero(props.heroIndex)}><Close
+          fontSize={"small"}/></IconButton>
       </div>
+      <TextField
+        select
+        label="Region"
+        id="region"
+        value={regionInput}
+        onChange={handleRegionChange}
+        style={{width: "25%"}}
+      >
+        {regions.map((region: string) => {
+          return (
+            <MenuItem
+              key={region}
+              value={region}
+            >
+              {`${region.toUpperCase()}`}
+            </MenuItem>
+          )
+        })}
+      </TextField>
       <TextField
         label="Battle Tag"
         value={profileInput}

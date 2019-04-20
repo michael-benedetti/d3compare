@@ -78,7 +78,7 @@ function App(props: AppProps) {
     const battleTag: string = heroData.find((data: LeaderData) => data.id === "HeroBattleTag")!.string || "";
     const heroId: string = heroData.find((data: LeaderData) => data.id === "HeroId")!.number!.toString() || "";
 
-    handleAddHero({account: battleTag, heroId});
+    handleAddHero({region: "us", account: battleTag, heroId});
   }
 
   function handleSelectedStatChange(stat: string) {
@@ -98,7 +98,7 @@ function App(props: AppProps) {
           <div>
             <>
               <Button
-                onClick={() => handleAddHero({account: "", heroId: ""})}
+                onClick={() => handleAddHero({region: "us", account: "", heroId: ""})}
                 style={{padding: "5px", width: "130px", fontFamily: "exocet-blizzard-light", fontSize: "20px"}}
                 disabled={heros.length >= 4}
               >
