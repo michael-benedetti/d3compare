@@ -17,7 +17,7 @@ function HeroInfo(props: HeroInfoProps) {
           {props.hero.class && startCase(props.hero.class)}
           {props.hero.seasonal && <span style={{color: "#66cc00"}}> - Seasonal</span>}
         </div>
-        <div className={"HeroName"}>{props.hero.name}</div>
+        <div className={"HeroName"} style={{color: props.hero.hardcore ? "red" : "white"}}>{props.hero.name}</div>
       </>
       }
     </>

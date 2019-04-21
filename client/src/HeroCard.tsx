@@ -14,7 +14,8 @@ import HeroLegendaryPowers from "./HeroLegendaryPowers";
 import {AppContext} from "./App";
 
 interface HeroCardProps {
-  hero: HeroIdentifier;
+  handleHeroChange: (newHeroIdentifier: HeroIdentifier, heroIndex: number) => void;
+  heroIdentifier: HeroIdentifier;
   heroIndex: number;
   handleGearMouseEnter: (gearSpot: string) => void;
   gearSpotTooltip: string;
@@ -23,7 +24,6 @@ interface HeroCardProps {
 
 function HeroCard(props: HeroCardProps) {
   const [hero, setHero] = useState<DetailedHeroData>();
-  const [heroIdentifier, setHeroIdentifier] = useState<HeroIdentifier>(props.hero);
   const [profile, setProfile] = useState<Profile>({battleTag: ""});
 
   const appContext = useContext(AppContext);
@@ -33,27 +33,27 @@ function HeroCard(props: HeroCardProps) {
   }
 
   async function handleHeroChange(region: string, account: string, heroId: string) {
-    setHeroIdentifier({region, account, heroId});
-    setHero(await appContext.d3Repository.getHero(region, account, heroId));
+    const newHeroIdentifier: HeroIdentifier = {region, account, heroId, key: props.heroIdentifier.key};
+    props.handleHeroChange(newHeroIdentifier, props.heroIndex);
   }
 
   async function fetchProfile() {
-    const fetchedProfile: Profile = await appContext.d3Repository.getProfile(heroIdentifier.region, heroIdentifier.account);
+    const fetchedProfile: Profile = await appContext.d3Repository.getProfile(props.heroIdentifier.region, props.heroIdentifier.account);
     setProfile(fetchedProfile);
   }
 
   async function fetchHero() {
-    const fetchedHero: DetailedHeroData = await appContext.d3Repository.getHero(heroIdentifier.region, heroIdentifier.account, heroIdentifier.heroId);
+    const fetchedHero: DetailedHeroData = await appContext.d3Repository.getHero(props.heroIdentifier.region, props.heroIdentifier.account, props.heroIdentifier.heroId);
     if (fetchedHero.code !== "NOTFOUND")
       setHero(fetchedHero);
   }
 
   useEffect(() => {
-    if (props.hero.account && props.hero.heroId) {
+    if (props.heroIdentifier.account && props.heroIdentifier.heroId) {
       fetchProfile();
       fetchHero();
     }
-  }, []);
+  }, [props.heroIdentifier.heroId]);
 
   return (
     <>
@@ -61,7 +61,7 @@ function HeroCard(props: HeroCardProps) {
         <HeroSelector
           heroIndex={props.heroIndex}
           handleRemoveHero={props.handleRemoveHero}
-          initialHero={props.hero}
+          initialHero={props.heroIdentifier}
           setProfile={setProfile}
           handleHeroChange={handleHeroChange}
           profile={profile}
@@ -70,7 +70,7 @@ function HeroCard(props: HeroCardProps) {
           <div className="Hero">
             <HeroInfo hero={hero}/>
             <HeroGrid
-              heroIdentifier={heroIdentifier || {region: "us", battleTag: "", heroId: ""}}
+              heroIdentifier={props.heroIdentifier}
               heroIndex={props.heroIndex}
               hero={hero}
               handleGearMouseEnter={handleGearMouseEnter}

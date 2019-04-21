@@ -4,12 +4,15 @@ import './App.css';
 import {D3Repository, HeroIdentifier, Leaderboard, LeaderData} from "./interfaces";
 import HeroCard from "./HeroCard";
 import {Button} from "@material-ui/core";
+import {History} from "history";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import uniqid = require('uniqid');
 
 interface AppProps {
+  history: History;
   d3Repository: D3Repository;
+  heroIdentifiers: HeroIdentifier[];
 }
 
 const theme = createMuiTheme({
@@ -39,7 +42,8 @@ export interface IAppContext {
 
 export const AppContext = React.createContext<IAppContext>({
   hoveredStat: "",
-  setSelectedStat: () => {},
+  setSelectedStat: () => {
+  },
   d3Repository: {
     getProfile: () => Promise.resolve({}),
     getHero: () => Promise.resolve({}),
@@ -51,24 +55,41 @@ export const AppContext = React.createContext<IAppContext>({
 function App(props: AppProps) {
   const [gearSpotTooltipVisible, setGearSpotToolTipVisible] = useState<string>("");
   const [selectedStat, setSelectedStat] = useState<string>("");
-  const [heros, setHeros] = useState<HeroIdentifier[]>([
-    // {account: "Demospheus#1879", heroId: ""},
-    // {account: "Sammo#1931", heroId: ""}
-  ]);
+  const [heroIdentifiers, setHeroIdentifiers] = useState<HeroIdentifier[]>(props.heroIdentifiers);
 
   function handleGearMouseEnter(gearSpot: string) {
     setGearSpotToolTipVisible(gearSpot);
   }
 
+  function composeHeroInentifiersIntoParam(newHeroIdentifiers: HeroIdentifier[]) {
+    const paramStrings: string[] = newHeroIdentifiers.map((heroIdentifier) => {
+      const {region, account, heroId} = heroIdentifier;
+      return [region, account.replace("#", "-"), heroId].join(",");
+    });
+    return paramStrings.join("&");
+  }
+
   function handleAddHero(newHero: HeroIdentifier) {
-    if (heros.length >= 4) {
+    if (heroIdentifiers.length >= 4) {
       return;
     }
-    setHeros([...heros, newHero]);
+    const newHeroIdentifiers = [...heroIdentifiers, newHero];
+    props.history.replace(`?heros=${composeHeroInentifiersIntoParam(newHeroIdentifiers)}`);
+    setHeroIdentifiers(newHeroIdentifiers);
   }
 
   async function handleRemoveHero(heroIndex: number) {
-    setHeros(heros.filter((hero, i) => i !== heroIndex));
+    const newHeroIdentifiers = heroIdentifiers.filter((hero, i) => i !== heroIndex);
+    props.history.replace(`?heros=${composeHeroInentifiersIntoParam(newHeroIdentifiers)}`);
+    setHeroIdentifiers(newHeroIdentifiers);
+  }
+
+  function handleHeroChange(newHeroIdentifier: HeroIdentifier, heroIndex: number) {
+    const newHeroIdentifiers = heroIdentifiers.map((heroIdentifier, i) => {
+      return i === heroIndex ? newHeroIdentifier : heroIdentifier;
+    });
+    props.history.replace(`?heros=${composeHeroInentifiersIntoParam(newHeroIdentifiers)}`);
+    setHeroIdentifiers(newHeroIdentifiers);
   }
 
   async function handleAddRandomHero() {
@@ -100,16 +121,26 @@ function App(props: AppProps) {
             <>
               <Button
                 onClick={() => handleAddHero({region: "us", account: "", heroId: "", key: uniqid.process()})}
-                style={{padding: "5px", width: "130px", fontFamily: "exocet-blizzard-light", fontSize: "20px"}}
-                disabled={heros.length >= 4}
+                style={{
+                  padding: "5px",
+                  width: "130px",
+                  fontFamily: "exocet-blizzard-light",
+                  fontSize: "20px"
+                }}
+                disabled={heroIdentifiers.length >= 4}
               >
                 Add Hero
               </Button>
               <br/>
               <Button
                 onClick={handleAddRandomHero}
-                style={{padding: "5px", width: "235px", fontFamily: "exocet-blizzard-light", fontSize: "20px"}}
-                disabled={heros.length >= 4}
+                style={{
+                  padding: "5px",
+                  width: "235px",
+                  fontFamily: "exocet-blizzard-light",
+                  fontSize: "20px"
+                }}
+                disabled={heroIdentifiers.length >= 4}
               >
                 Add Random Hero
               </Button>
@@ -117,12 +148,13 @@ function App(props: AppProps) {
             <br/>
             <br/>
             <div className={"Heros"}>
-              {heros && heros.map((hero: HeroIdentifier, i: number) => {
+              {heroIdentifiers && heroIdentifiers.map((hero: HeroIdentifier, i: number) => {
                 return (
                   <HeroCard
+                    handleHeroChange={handleHeroChange}
                     heroIndex={i}
-                    key={`heroCard-${hero.key || hero.heroId}`}
-                    hero={hero}
+                    key={hero.key}
+                    heroIdentifier={hero}
                     handleGearMouseEnter={handleGearMouseEnter}
                     gearSpotTooltip={gearSpotTooltipVisible}
                     handleRemoveHero={handleRemoveHero}

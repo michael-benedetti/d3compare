@@ -22,7 +22,7 @@ interface HeroSelectorProps {
 
 function HeroSelector(props: HeroSelectorProps) {
   const [profileInput, setProfileInput] = useState<string>(props.initialHero.account);
-  const [regionInput, setRegionInput] = useState<string>("us");
+  const [regionInput, setRegionInput] = useState<string>(props.initialHero.region);
   const [heroInput, setHeroInput] = useState<string>(props.initialHero.heroId);
   const [error, setError] = useState<boolean>(false);
 
@@ -33,7 +33,7 @@ function HeroSelector(props: HeroSelectorProps) {
   function handleHeroChange(event: any) {
     const newHero: string = event.target.value;
     setHeroInput(newHero);
-    fetchHero(newHero);
+    props.handleHeroChange(regionInput, profileInput, newHero);
   }
 
   function handleProfileChange(event: any) {
@@ -52,10 +52,6 @@ function HeroSelector(props: HeroSelectorProps) {
     } catch {
       setError(true);
     }
-  }
-
-  async function fetchHero(hero: string) {
-    props.handleHeroChange(regionInput, profileInput, hero);
   }
 
   return (
