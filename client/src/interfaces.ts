@@ -15,6 +15,7 @@ export interface HeroIdentifier {
   region: string;
   account: string;
   heroId: string;
+  key?: string;
 }
 
 export interface Kills {

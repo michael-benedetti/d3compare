@@ -24,6 +24,7 @@ function HeroSelector(props: HeroSelectorProps) {
   const [profileInput, setProfileInput] = useState<string>(props.initialHero.account);
   const [regionInput, setRegionInput] = useState<string>("us");
   const [heroInput, setHeroInput] = useState<string>(props.initialHero.heroId);
+  const [error, setError] = useState<boolean>(false);
 
   const appContext = useContext<IAppContext>(AppContext);
 
@@ -44,8 +45,13 @@ function HeroSelector(props: HeroSelectorProps) {
   }
 
   async function fetchProfile() {
-    const fetchedProfile: Profile = await appContext.d3Repository.getProfile(regionInput, profileInput);
-    props.setProfile(fetchedProfile);
+    try {
+      const fetchedProfile: Profile = await appContext.d3Repository.getProfile(regionInput, profileInput);
+      props.setProfile(fetchedProfile);
+      setError(false);
+    } catch {
+      setError(true);
+    }
   }
 
   async function fetchHero(hero: string) {
@@ -81,6 +87,8 @@ function HeroSelector(props: HeroSelectorProps) {
         label="Battle Tag"
         value={profileInput}
         onChange={handleProfileChange}
+        style={{width: "90%"}}
+        error={error}
       />
       <br/>
       <Button onClick={fetchProfile}>submit</Button>

@@ -6,6 +6,7 @@ import HeroCard from "./HeroCard";
 import {Button} from "@material-ui/core";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
+import uniqid = require('uniqid');
 
 interface AppProps {
   d3Repository: D3Repository;
@@ -98,7 +99,7 @@ function App(props: AppProps) {
           <div>
             <>
               <Button
-                onClick={() => handleAddHero({region: "us", account: "", heroId: ""})}
+                onClick={() => handleAddHero({region: "us", account: "", heroId: "", key: uniqid.process()})}
                 style={{padding: "5px", width: "130px", fontFamily: "exocet-blizzard-light", fontSize: "20px"}}
                 disabled={heros.length >= 4}
               >
@@ -120,7 +121,7 @@ function App(props: AppProps) {
                 return (
                   <HeroCard
                     heroIndex={i}
-                    key={`heroCard-${hero.heroId}`}
+                    key={`heroCard-${hero.key || hero.heroId}`}
                     hero={hero}
                     handleGearMouseEnter={handleGearMouseEnter}
                     gearSpotTooltip={gearSpotTooltipVisible}

@@ -65,9 +65,7 @@ public class D3Controller {
         try {
             return restTemplate.getForObject(requestUrl, Object.class);
         } catch (HttpClientErrorException e) {
-            System.out.println(e);
-            System.out.println(requestUrl);
-            return "";
+            return "error";
         }
     }
 
