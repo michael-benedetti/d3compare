@@ -13,7 +13,7 @@ function parseHerosQueryParam(history: History): HeroIdentifier[] {
     const heros = history.location.search.split("?heros=")[1].split("&");
     const parsedHeros: HeroIdentifier[] = heros.map((hero) => {
       const heroData = hero.split(",");
-      return {region: heroData[0], account: heroData[1], heroId: heroData[2], key: uniqid.process()}
+      return {region: heroData[0], account: decodeURIComponent(heroData[1]), heroId: heroData[2], key: uniqid.process()}
     });
     return parsedHeros.slice(0,4);
   }
