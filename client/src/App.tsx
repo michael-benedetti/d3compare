@@ -1,7 +1,7 @@
 import * as  React from 'react';
 import {useState} from 'react';
 import './App.css';
-import {D3Repository, HeroIdentifier, Leaderboard, LeaderData} from "./interfaces";
+import {D3Repository, HeroIdentifier, HoverStat, Leaderboard, LeaderData} from "./interfaces";
 import HeroCard from "./HeroCard";
 import {Button} from "@material-ui/core";
 import {History} from "history";
@@ -35,13 +35,13 @@ const theme = createMuiTheme({
 
 
 export interface IAppContext {
-  hoveredStat: string;
-  setSelectedStat: (stat: string) => void;
+  hoveredStat: HoverStat;
+  setSelectedStat: (hoverStat: HoverStat) => void;
   d3Repository: D3Repository;
 }
 
 export const AppContext = React.createContext<IAppContext>({
-  hoveredStat: "",
+  hoveredStat: {stat: "", statValue: "", heroIndex: -1},
   setSelectedStat: () => {
   },
   d3Repository: {
@@ -54,7 +54,7 @@ export const AppContext = React.createContext<IAppContext>({
 
 function App(props: AppProps) {
   const [gearSpotTooltipVisible, setGearSpotToolTipVisible] = useState<string>("");
-  const [selectedStat, setSelectedStat] = useState<string>("");
+  const [selectedStat, setSelectedStat] = useState<HoverStat>({stat: "", statValue: "", heroIndex: -1});
   const [heroIdentifiers, setHeroIdentifiers] = useState<HeroIdentifier[]>(props.heroIdentifiers);
 
   function handleGearMouseEnter(gearSpot: string) {
@@ -103,8 +103,8 @@ function App(props: AppProps) {
     handleAddHero({region: "us", account: battleTag, heroId});
   }
 
-  function handleSelectedStatChange(stat: string) {
-    setSelectedStat(stat);
+  function handleSelectedStatChange(hoverStat: HoverStat) {
+    setSelectedStat(hoverStat);
   }
 
   return (

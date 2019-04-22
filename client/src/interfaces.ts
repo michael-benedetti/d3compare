@@ -190,6 +190,12 @@ export interface LegendaryPower {
   tooltipParams: string;
 }
 
+export interface HoverStat {
+  stat: string;
+  statValue: string;
+  heroIndex: number;
+}
+
 export interface Stats {
   life: number;
   damage: number;

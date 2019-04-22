@@ -84,7 +84,10 @@ function HeroCard(props: HeroCardProps) {
               hero={hero}
               heroIndex={props.heroIndex}
             />
-            <HeroStats hero={hero}/>
+            <HeroStats
+              hero={hero}
+              heroIndex={props.heroIndex}
+            />
           </div>
         )}
       </div>

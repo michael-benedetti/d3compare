@@ -1,0 +1,10 @@
+.StatItem:hover {
+    background-color: #ccc;
+    color: black;
+    font-weight: bold;
+}
+
+.StatItem {
+    font-size: 16px;
+    white-space: nowrap;
+}
