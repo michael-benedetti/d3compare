@@ -57,7 +57,7 @@ function GearItem(props: GearItemProps) {
   }
 
   return (
-    <div className={`GearItem ${itemType} ${props.gearSpot}`}
+    <div className={`GearItem ${itemType} ${props.gearSpot} ${props.detailedItem.typeName.includes("Primal") ? "Primal" : ""}`}
          style={{overflow: props.gearSpot === "torso" ? "hidden" : ""}}>
       <Tooltip
         title={tooltip}

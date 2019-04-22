@@ -14,6 +14,10 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#051c05', endColorstr='#02510a',GradientType=0 ); /* IE6-9 */
 }
 
+.Primal {
+    border-color: #aa0000 !important;
+}
+
 .Legendary {
     border: 1px solid darkgoldenrod;
     background: #1c1805; /* Old browsers */
