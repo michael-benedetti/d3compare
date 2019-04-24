@@ -100,7 +100,7 @@ function App(props: AppProps) {
     const battleTag: string = heroData.find((data: LeaderData) => data.id === "HeroBattleTag")!.string || "";
     const heroId: string = heroData.find((data: LeaderData) => data.id === "HeroId")!.number!.toString() || "";
 
-    handleAddHero({region: "us", account: battleTag, heroId});
+    handleAddHero({region: "us", account: battleTag, heroId, key: uniqid.process()});
   }
 
   function handleSelectedStatChange(hoverStat: HoverStat) {
