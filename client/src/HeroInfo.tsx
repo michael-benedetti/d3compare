@@ -1,6 +1,6 @@
 import * as React from "react";
-import {DetailedHeroData} from "./interfaces";
-import {startCase} from "./helpers";
+import {DetailedHeroData} from "./helpers/interfaces";
+import {startCase} from "./helpers/helpers";
 
 interface HeroInfoProps {
   hero: DetailedHeroData;

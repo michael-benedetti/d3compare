@@ -1,11 +1,11 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import './index.css';
+import './css/index.css';
 import App from './App';
 import {History} from "history";
 import {HttpD3Repository} from "./HttpD3Repository";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
-import {HeroIdentifier} from "./interfaces";
+import {HeroIdentifier} from "./helpers/interfaces";
 import uniqid = require('uniqid');
 
 function parseHerosQueryParam(history: History): HeroIdentifier[] {

@@ -1,9 +1,9 @@
 import * as  React from 'react';
-import './HeroCard.css';
+import './css/HeroCard.css';
 import {
   DetailedHeroData, HeroIdentifier,
   Profile
-} from "./interfaces";
+} from "./helpers/interfaces";
 import {useContext, useEffect, useState} from "react";
 import HeroInfo from "./HeroInfo";
 import HeroGrid from "./HeroGrid";

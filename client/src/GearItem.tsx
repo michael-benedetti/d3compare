@@ -1,7 +1,7 @@
 import * as React from "react";
 import Tooltip from '@material-ui/core/Tooltip';
-import './GearItem.css';
-import {DetailedHeroData, DetailedItem} from "./interfaces";
+import './css/GearItem.css';
+import {DetailedHeroData, DetailedItem} from "./helpers/interfaces";
 
 interface GearItemProps {
   hero: DetailedHeroData;

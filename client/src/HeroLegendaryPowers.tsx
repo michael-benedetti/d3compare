@@ -1,4 +1,4 @@
-import {DetailedHeroData, LegendaryPower} from "./interfaces";
+import {DetailedHeroData, LegendaryPower} from "./helpers/interfaces";
 import * as  React from 'react';
 
 interface HeroLegendaryPowersProps {

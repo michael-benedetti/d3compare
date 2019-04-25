@@ -1,4 +1,4 @@
-import {D3Repository, Leaderboard} from "./interfaces";
+import {D3Repository, Leaderboard} from "./helpers/interfaces";
 
 export class HttpD3Repository implements D3Repository {
   public async getProfile(region: string, account: string) {

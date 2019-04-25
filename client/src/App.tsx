@@ -1,7 +1,7 @@
 import * as  React from 'react';
 import {useState} from 'react';
-import './App.css';
-import {D3Repository, HeroIdentifier, HoverStat, Leaderboard, LeaderData} from "./interfaces";
+import './css/App.css';
+import {D3Repository, HeroIdentifier, HoverStat, Leaderboard, LeaderData} from "./helpers/interfaces";
 import HeroCard from "./HeroCard";
 import {Button} from "@material-ui/core";
 import {History} from "history";

@@ -1,7 +1,7 @@
-import {DetailedHeroData, Skill} from "./interfaces";
+import {DetailedHeroData, Skill} from "./helpers/interfaces";
 import * as React from "react";
 import {Tooltip} from "@material-ui/core";
-import "./HeroSkills.css";
+import "./css/HeroSkills.css";
 
 interface HeroSkillsProps {
   hero: DetailedHeroData;

@@ -1,7 +1,7 @@
 import Button from "@material-ui/core/Button";
 import Close from "@material-ui/icons/Close";
-import "./HeroSelector.css";
-import {BasicHeroData, HeroIdentifier, Profile} from "./interfaces";
+import "./css/HeroSelector.css";
+import {BasicHeroData, HeroIdentifier, Profile} from "./helpers/interfaces";
 import Card from "@material-ui/core/Card";
 import * as React from "react";
 import {Dispatch, SetStateAction, useState} from "react";

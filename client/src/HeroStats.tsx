@@ -1,10 +1,10 @@
-import {startCase} from "./helpers";
+import {startCase} from "./helpers/helpers";
 import Card from "@material-ui/core/Card";
 import * as React from "react";
-import {DetailedHeroData} from "./interfaces";
+import {DetailedHeroData} from "./helpers/interfaces";
 import {useContext} from "react";
 import {AppContext} from "./App";
-import './HeroStats.css';
+import './css/HeroStats.css';
 
 interface HeroStatsProps {
   hero: DetailedHeroData;

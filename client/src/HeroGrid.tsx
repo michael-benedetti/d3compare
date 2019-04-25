@@ -1,6 +1,6 @@
 import GearItem from "./GearItem";
 import * as React from "react";
-import {DetailedHeroData, DetailedItems, HeroIdentifier} from "./interfaces";
+import {DetailedHeroData, DetailedItems, HeroIdentifier} from "./helpers/interfaces";
 import {useEffect, useState} from "react";
 import {useContext} from "react";
 import {AppContext, IAppContext} from "./App";
