@@ -1,7 +1,7 @@
 import * as  React from 'react';
 import './css/HeroCard.css';
 import {
-  DetailedHeroData, HeroIdentifier,
+  DetailedHeroData, DetailedItems, HeroIdentifier,
   Profile
 } from "./helpers/interfaces";
 import {useContext, useEffect, useState} from "react";
@@ -11,7 +11,9 @@ import HeroSelector from "./HeroSelector";
 import HeroSkills from "./HeroSkills";
 import HeroStats from "./HeroStats";
 import HeroLegendaryPowers from "./HeroLegendaryPowers";
+import CircularProgress from '@material-ui/core/CircularProgress';
 import {AppContext} from "./App";
+import {defaultDetailedItems} from "./helpers/helpers";
 
 interface HeroCardProps {
   handleHeroChange: (newHeroIdentifier: HeroIdentifier, heroIndex: number) => void;
@@ -24,7 +26,9 @@ interface HeroCardProps {
 
 function HeroCard(props: HeroCardProps) {
   const [hero, setHero] = useState<DetailedHeroData>();
+  const [detailedItems, setDetailedItems] = useState<DetailedItems>(defaultDetailedItems);
   const [profile, setProfile] = useState<Profile>({battleTag: ""});
+  const [loadingHero, setLoadingHero] = useState<boolean>(false);
 
   const appContext = useContext(AppContext);
 
@@ -43,9 +47,18 @@ function HeroCard(props: HeroCardProps) {
   }
 
   async function fetchHero() {
-    const fetchedHero: DetailedHeroData = await appContext.d3Repository.getHero(props.heroIdentifier.region, props.heroIdentifier.account, props.heroIdentifier.heroId);
-    if (fetchedHero.code !== "NOTFOUND")
-      setHero(fetchedHero);
+    setLoadingHero(true);
+    await appContext.d3Repository.getHero(props.heroIdentifier.region, props.heroIdentifier.account, props.heroIdentifier.heroId).then(async (fetchedHero) => {
+      if (fetchedHero.code !== "NOTFOUND") {
+        setHero(fetchedHero);
+        await appContext.d3Repository.getDetailedItems(props.heroIdentifier.region, props.heroIdentifier.account, fetchedHero.id.toString()).then((fetchedDetailedItems) => {
+          setDetailedItems(fetchedDetailedItems);
+        });
+      }
+    }, () => {
+      setLoadingHero(false);
+    });
+    setLoadingHero(false);
   }
 
   useEffect(() => {
@@ -66,13 +79,14 @@ function HeroCard(props: HeroCardProps) {
           handleHeroChange={handleHeroChange}
           profile={profile}
         />
-        {hero && profile && (
+        {!loadingHero ? hero && profile ?
           <div className="Hero">
             <HeroInfo hero={hero}/>
             <HeroGrid
               heroIdentifier={props.heroIdentifier}
               heroIndex={props.heroIndex}
               hero={hero}
+              detailedItems={detailedItems}
               handleGearMouseEnter={handleGearMouseEnter}
               gearSpotTooltip={props.gearSpotTooltip}
             />
@@ -89,7 +103,15 @@ function HeroCard(props: HeroCardProps) {
               heroIndex={props.heroIndex}
             />
           </div>
-        )}
+          :
+          <div style={{fontFamily: "exocet-blizzard-light", color: "red"}}>
+            <div>-Error-</div>
+            <div>-Loading-</div>
+            <div>-Hero-</div>
+          </div>
+          :
+          <CircularProgress style={{color: "red"}}/>
+        }
       </div>
     </>
   );

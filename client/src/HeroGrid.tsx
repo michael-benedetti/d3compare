@@ -1,42 +1,27 @@
 import GearItem from "./GearItem";
 import * as React from "react";
 import {DetailedHeroData, DetailedItems, HeroIdentifier} from "./helpers/interfaces";
-import {useEffect, useState} from "react";
-import {useContext} from "react";
-import {AppContext, IAppContext} from "./App";
 
 interface HeroGridProps {
   heroIdentifier: HeroIdentifier;
   heroIndex: number;
   hero: DetailedHeroData;
+  detailedItems: DetailedItems;
   handleGearMouseEnter: (gearspot: string) => void;
   gearSpotTooltip: string;
 }
 
 function HeroGrid(props: HeroGridProps) {
-  const [items, setItems] = useState<DetailedItems>();
-
-  const appContext = useContext<IAppContext>(AppContext);
-
-  async function fetchItems() {
-    const fetchedItems: DetailedItems = await appContext.d3Repository.getDetailedItems(props.heroIdentifier.region, props.heroIdentifier.account, props.hero.id.toString());
-    setItems(fetchedItems);
-  }
-
-  useEffect(() => {
-    fetchItems();
-  }, [props.hero]);
-
   return (
     <div className={"HeroGrid"}>
-      {items && Object.keys(items).map((item: string) => {
+      {props.detailedItems && Object.keys(props.detailedItems).map((item: string) => {
         return (
           <GearItem
             key={`${props.heroIndex}-${item}`}
             heroIndex={props.heroIndex}
             hero={props.hero}
             gearSpot={item}
-            detailedItem={items[item]}
+            detailedItem={props.detailedItems[item]}
             handleGearMouseEnter={props.handleGearMouseEnter}
             gearSpotTooltip={props.gearSpotTooltip}
           />
