@@ -29,6 +29,7 @@ function HeroCard(props: HeroCardProps) {
   const [detailedItems, setDetailedItems] = useState<DetailedItems>(defaultDetailedItems);
   const [profile, setProfile] = useState<Profile>({battleTag: ""});
   const [loadingHero, setLoadingHero] = useState<boolean>(false);
+  const [attemptedToLoadHero, setAttemptedToLoadHero] = useState<boolean>(false);
 
   const appContext = useContext(AppContext);
 
@@ -48,6 +49,7 @@ function HeroCard(props: HeroCardProps) {
 
   async function fetchHero() {
     setLoadingHero(true);
+    setAttemptedToLoadHero(true);
     await appContext.d3Repository.getHero(props.heroIdentifier.region, props.heroIdentifier.account, props.heroIdentifier.heroId).then(async (fetchedHero) => {
       if (fetchedHero.code !== "NOTFOUND") {
         setHero(fetchedHero);
@@ -103,7 +105,7 @@ function HeroCard(props: HeroCardProps) {
               heroIndex={props.heroIndex}
             />
           </div>
-          :
+          : attemptedToLoadHero &&
           <div style={{fontFamily: "exocet-blizzard-light", color: "red"}}>
             <div>-Error-</div>
             <div>-Loading-</div>
