@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: d3compare
-          image: egdetti/d3compare:1.1.0
+          image: egdetti/d3compare:1.14.0
           env:
             - name: D3_CLIENT_ID
               value: ${D3_CLIENT_ID}
