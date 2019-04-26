@@ -5,6 +5,13 @@
     }
 }
 
+@media only screen and (min-width: 1086px) {
+    .Title {
+        margin-left: 20px;
+    }
+}
+
+
 @font-face {
     font-family: "exocet-blizzard-light";
     src: url("./exocet-blizzard-light.ttf");
@@ -46,6 +53,5 @@
     color: red;
     font-size: 30px;
     font-weight: bold;
-    margin-left: 20px;
     text-shadow: 1px 1px 1px black;
 }
