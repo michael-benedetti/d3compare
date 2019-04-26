@@ -3,11 +3,11 @@ import {useState} from 'react';
 import './css/App.css';
 import {D3Repository, HeroIdentifier, HoverStat, Leaderboard, LeaderData} from "./helpers/interfaces";
 import HeroCard from "./HeroCard";
-import {Button} from "@material-ui/core";
 import {History} from "history";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import uniqid = require('uniqid');
+import AddHero from "./AddHero";
 
 interface AppProps {
   history: History;
@@ -57,6 +57,7 @@ function App(props: AppProps) {
   const [selectedStat, setSelectedStat] = useState<HoverStat>({stat: "", statValue: "", heroIndex: -1});
   const [heroIdentifiers, setHeroIdentifiers] = useState<HeroIdentifier[]>(props.heroIdentifiers);
 
+
   function handleGearMouseEnter(gearSpot: string) {
     setGearSpotToolTipVisible(gearSpot);
   }
@@ -92,11 +93,11 @@ function App(props: AppProps) {
     setHeroIdentifiers(newHeroIdentifiers);
   }
 
-  async function handleAddRandomHero() {
+  async function handleAddLeaderboardHero(leaderboard: string, rank: number) {
     const leaderboardTypes = ["hardcore-barbarian", "barbarian", "hardcore-crusader", "crusader", "hardcore-dh", "dh", "hardcore-monk", "monk", "hardcore-wd", "wd", "hardcore-wizard", "wizard"];
-    const leaderboardType = leaderboardTypes[Math.floor(Math.random() * leaderboardTypes.length)];
+    const leaderboardType = leaderboard !== "random" ? leaderboard : leaderboardTypes[Math.floor(Math.random() * leaderboardTypes.length)];
     const leaders: Leaderboard = await props.d3Repository.getLeaderboard("16", `rift-${leaderboardType}`);
-    const heroData: LeaderData[] = leaders.row[Math.floor(Math.random() * leaders.row.length)].player[0].data;
+    const heroData: LeaderData[] = leaders.row[rank !== -1 ? rank - 1 : Math.floor(Math.random() * leaders.row.length)].player[0].data;
     const battleTag: string = heroData.find((data: LeaderData) => data.id === "HeroBattleTag")!.string || "";
     const heroId: string = heroData.find((data: LeaderData) => data.id === "HeroId")!.number!.toString() || "";
 
@@ -117,36 +118,15 @@ function App(props: AppProps) {
         }}
       >
         <div className="App">
-          <div>
-            <>
-              <Button
-                onClick={() => handleAddHero({region: "us", account: "", heroId: "", key: uniqid.process()})}
-                style={{
-                  padding: "5px",
-                  width: "130px",
-                  fontFamily: "exocet-blizzard-light",
-                  fontSize: "20px"
-                }}
-                disabled={heroIdentifiers.length >= 4}
-              >
-                Add Hero
-              </Button>
-              <br/>
-              <Button
-                onClick={handleAddRandomHero}
-                style={{
-                  padding: "5px",
-                  width: "235px",
-                  fontFamily: "exocet-blizzard-light",
-                  fontSize: "20px"
-                }}
-                disabled={heroIdentifiers.length >= 4}
-              >
-                Add Random Hero
-              </Button>
-            </>
-            <br/>
-            <br/>
+          <div className={"MenuBar"}>
+            <div className={"Title"}>D3Compare.com</div>
+            <AddHero
+              handleAddHero={handleAddHero}
+              handleAddLeaderboardHero={handleAddLeaderboardHero}
+              heroIdentifiers={heroIdentifiers}
+            />
+          </div>
+          <div className={"Workspace"}>
             <div className={"Heros"}>
               {heroIdentifiers && heroIdentifiers.map((hero: HeroIdentifier, i: number) => {
                 return (

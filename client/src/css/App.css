@@ -1,5 +1,6 @@
-@media only screen and (max-width: 600px) {
-    .Heros {
+@media only screen and (max-width: 1085px) {
+    .MenuBar {
+        padding: 10px;
         flex-direction: column;
     }
 }
@@ -10,7 +11,6 @@
 }
 
 .App {
-    padding: 25px;
     text-align: center;
     background-color: #282c34;
     min-height: 100vh;
@@ -24,5 +24,28 @@
 .Heros {
     color: white;
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
+.MenuBar {
+    width: 100%;
+    background-color: #474b53;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 2px 2px 2px black;
+}
+
+.Workspace {
+    padding: 25px;
+}
+
+.Title {
+    font-family: exocet-blizzard-light, serif;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+    margin-left: 20px;
+    text-shadow: 1px 1px 1px black;
+}
