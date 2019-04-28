@@ -38,28 +38,31 @@ export interface IAppContext {
   hoveredStat: HoverStat;
   setSelectedStat: (hoverStat: HoverStat) => void;
   d3Repository: D3Repository;
+  tooltipVisible: string;
+  handleShowTooltip: (tooltipId: string) => void;
 }
 
 export const AppContext = React.createContext<IAppContext>({
   hoveredStat: {stat: "", statValue: "", heroIndex: -1},
-  setSelectedStat: () => {
-  },
+  setSelectedStat: () => {},
   d3Repository: {
     getProfile: () => Promise.resolve({}),
     getHero: () => Promise.resolve({}),
     getDetailedItems: () => Promise.resolve({}),
     getLeaderboard: () => Promise.resolve({})
-  }
+  },
+  tooltipVisible: "",
+  handleShowTooltip: () => {},
 });
 
 function App(props: AppProps) {
-  const [gearSpotTooltipVisible, setGearSpotToolTipVisible] = useState<string>("");
+  const [tooltipVisible, setTooltipVisible] = useState<string>("");
   const [selectedStat, setSelectedStat] = useState<HoverStat>({stat: "", statValue: "", heroIndex: -1});
   const [heroIdentifiers, setHeroIdentifiers] = useState<HeroIdentifier[]>(props.heroIdentifiers);
 
 
-  function handleGearMouseEnter(gearSpot: string) {
-    setGearSpotToolTipVisible(gearSpot);
+  function handleShowTooltip(tooltipId: string) {
+    setTooltipVisible(tooltipId);
   }
 
   function composeHeroInentifiersIntoParam(newHeroIdentifiers: HeroIdentifier[]) {
@@ -115,6 +118,8 @@ function App(props: AppProps) {
           hoveredStat: selectedStat,
           setSelectedStat: handleSelectedStatChange,
           d3Repository: props.d3Repository,
+          tooltipVisible: tooltipVisible,
+          handleShowTooltip: handleShowTooltip,
         }}
       >
         <div className="App">
@@ -135,8 +140,6 @@ function App(props: AppProps) {
                     heroIndex={i}
                     key={hero.key}
                     heroIdentifier={hero}
-                    handleGearMouseEnter={handleGearMouseEnter}
-                    gearSpotTooltip={gearSpotTooltipVisible}
                     handleRemoveHero={handleRemoveHero}
                   />
                 )

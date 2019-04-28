@@ -12,15 +12,13 @@ import HeroSkills from "./HeroSkills";
 import HeroStats from "./HeroStats";
 import HeroLegendaryPowers from "./HeroLegendaryPowers";
 import CircularProgress from '@material-ui/core/CircularProgress';
-import {AppContext} from "./App";
+import {AppContext, IAppContext} from "./App";
 import {defaultDetailedItems} from "./helpers/helpers";
 
 interface HeroCardProps {
   handleHeroChange: (newHeroIdentifier: HeroIdentifier, heroIndex: number) => void;
   heroIdentifier: HeroIdentifier;
   heroIndex: number;
-  handleGearMouseEnter: (gearSpot: string) => void;
-  gearSpotTooltip: string;
   handleRemoveHero: (heroIndex: number) => void;
 }
 
@@ -31,11 +29,7 @@ function HeroCard(props: HeroCardProps) {
   const [loadingHero, setLoadingHero] = useState<boolean>(false);
   const [attemptedToLoadHero, setAttemptedToLoadHero] = useState<boolean>(false);
 
-  const appContext = useContext(AppContext);
-
-  function handleGearMouseEnter(gearSpot: string) {
-    props.handleGearMouseEnter(gearSpot);
-  }
+  const appContext = useContext<IAppContext>(AppContext);
 
   async function handleHeroChange(region: string, account: string, heroId: string) {
     const newHeroIdentifier: HeroIdentifier = {region, account, heroId, key: props.heroIdentifier.key};
@@ -89,8 +83,6 @@ function HeroCard(props: HeroCardProps) {
               heroIndex={props.heroIndex}
               hero={hero}
               detailedItems={detailedItems}
-              handleGearMouseEnter={handleGearMouseEnter}
-              gearSpotTooltip={props.gearSpotTooltip}
             />
             <HeroSkills
               hero={hero}

@@ -2,6 +2,8 @@ import {DetailedHeroData, Skill} from "./helpers/interfaces";
 import * as React from "react";
 import {Tooltip} from "@material-ui/core";
 import "./css/HeroSkills.css";
+import {AppContext, IAppContext} from "./App";
+import {useContext} from "react";
 
 interface HeroSkillsProps {
   hero: DetailedHeroData;
@@ -9,6 +11,8 @@ interface HeroSkillsProps {
 }
 
 function HeroSkills(props: HeroSkillsProps) {
+  const appContext = useContext<IAppContext>(AppContext);
+
   return (
     <div className={"Skills"}>
       {props.hero.skills.active.map((skill: Skill, i: number) => {
@@ -27,11 +31,20 @@ function HeroSkills(props: HeroSkillsProps) {
             }
           </div>
         );
-        return (
-          <div key={`${props.hero.id}-${skill.skill.slug}`} className={`p${i}`}>
-            <Tooltip title={toolTip}>
+          const key = `${props.hero.id}-${skill.skill.slug}`;
+
+          return (
+          <div key={key} className={`p${i}`}>
+            <Tooltip
+              title={toolTip}
+              open={appContext.tooltipVisible === key}
+            >
               <img alt={skill.skill.slug}
-                   src={`http://media.blizzard.com/d3/icons/skills/42/${skill.skill.icon}.png`}/>
+                   src={`http://media.blizzard.com/d3/icons/skills/42/${skill.skill.icon}.png`}
+                   onClick={() => appContext.handleShowTooltip(key)}
+                   onMouseEnter={() => appContext.handleShowTooltip(key)}
+                   onMouseLeave={() => appContext.handleShowTooltip("")}
+              />
             </Tooltip>
           </div>
         )
@@ -49,4 +62,4 @@ function HeroSkills(props: HeroSkillsProps) {
   )
 }
 
-export default HeroSkills
+export default HeroSkills;

@@ -7,8 +7,6 @@ interface HeroGridProps {
   heroIndex: number;
   hero: DetailedHeroData;
   detailedItems: DetailedItems;
-  handleGearMouseEnter: (gearspot: string) => void;
-  gearSpotTooltip: string;
 }
 
 function HeroGrid(props: HeroGridProps) {
@@ -22,8 +20,6 @@ function HeroGrid(props: HeroGridProps) {
             hero={props.hero}
             gearSpot={item}
             detailedItem={props.detailedItems[item]}
-            handleGearMouseEnter={props.handleGearMouseEnter}
-            gearSpotTooltip={props.gearSpotTooltip}
           />
         );
       })}

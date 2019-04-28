@@ -2,14 +2,14 @@ import * as React from "react";
 import Tooltip from '@material-ui/core/Tooltip';
 import './css/GearItem.css';
 import {DetailedHeroData, DetailedItem} from "./helpers/interfaces";
+import {AppContext, IAppContext} from "./App";
+import {useContext} from "react";
 
 interface GearItemProps {
   hero: DetailedHeroData;
   heroIndex: number;
   gearSpot: string;
   detailedItem: DetailedItem;
-  handleGearMouseEnter: (gearSpot: string) => void;
-  gearSpotTooltip: string
 }
 
 function GearItem(props: GearItemProps) {
@@ -18,7 +18,7 @@ function GearItem(props: GearItemProps) {
   const primaryAttributes = item.attributesHtml && item.attributesHtml.primary || [];
   const secondaryAttributes = item.attributesHtml && item.attributesHtml.secondary || [];
   const setDescription = item.set && item.set.descriptionHtml || "";
-
+  const appContext = useContext<IAppContext>(AppContext);
   const tooltip = (
     <div>
       <h3>{item.typeName}</h3>
@@ -37,14 +37,6 @@ function GearItem(props: GearItemProps) {
     </div>
   );
 
-  function handleMouseEnter() {
-    props.handleGearMouseEnter(props.gearSpot);
-  }
-
-  function handleMouseLeave() {
-    props.handleGearMouseEnter("");
-  }
-
   let itemType: string = "Normal";
   if (item.typeName.includes("Set")) {
     itemType = "Set";
@@ -61,13 +53,14 @@ function GearItem(props: GearItemProps) {
          style={{overflow: props.gearSpot === "torso" ? "hidden" : ""}}>
       <Tooltip
         title={tooltip}
-        open={props.gearSpotTooltip == props.gearSpot}
+        open={appContext.tooltipVisible == props.gearSpot}
       >
         <img
           id={`img-${props.gearSpot}`}
           alt={props.gearSpot}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+          onClick={() => appContext.handleShowTooltip(props.gearSpot)}
+          onMouseEnter={() => appContext.handleShowTooltip(props.gearSpot)}
+          onMouseLeave={() => appContext.handleShowTooltip("")}
           src={`http://media.blizzard.com/d3/icons/items/large/${itemIcon}.png`}
         />
       </Tooltip>

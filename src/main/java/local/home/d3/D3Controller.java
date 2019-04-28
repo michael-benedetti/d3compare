@@ -17,6 +17,9 @@ public class D3Controller {
     @Value("${D3COMPARE_URL}")
     private String d3compareUrl;
 
+    @Value("${D3COMPARE_ENVTYPE}")
+    private String envType;
+
     public D3Controller(AuthService authService) {
         this.authService = authService;
         reAuthenticate();
@@ -57,7 +60,7 @@ public class D3Controller {
     }
 
     private Object makeGetRequest(String requestUrl, String referrer) {
-        if (referrer == null || !referrer.contains(d3compareUrl)) {
+        if ((referrer == null || !referrer.contains(d3compareUrl)) && !envType.equals("dev")) {
             return "Ah, ah ah!  You didn't say the magic word!";
         }
         validateAccessToken();
