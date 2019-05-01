@@ -95,6 +95,7 @@ function HeroCard(props: HeroCardProps) {
             <HeroStats
               hero={hero}
               heroIndex={props.heroIndex}
+              detailedItems={detailedItems}
             />
           </div>
           : attemptedToLoadHero &&

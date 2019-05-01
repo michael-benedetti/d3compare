@@ -226,6 +226,63 @@ export interface Stats {
   secondaryResource: number;
 }
 
+export interface OrganizedStatsDefense {
+  armor?: number;
+  blockAmountMin?: number;
+  blockAmountMax?: number;
+  blockChance?: number;
+  dodgeChance?: number;
+  physicalResistance?: number;
+  coldResistance?: number;
+  fireResistance?: number;
+  lightningResistance?: number;
+  poisonResistance?: number;
+  "arcane/HolyResistance"?: number;
+  crowdControlReduction?: number;
+  missileDamageReduction?: number;
+  meleeDamageReduction?: number;
+  eliteDamageReduction?: number;
+  thorns?: number;
+}
+
+export interface OrganizedStatsLife {
+  life?: number;
+  totalLifeBonus?: number;
+  lifePerSecond?: number;
+  lifeSteal?: number;
+  lifePerKill?: number;
+  lifePerHit?: number;
+  healthGlobeHealingBonus?: number;
+  bonusToGoldGlobeRadius?: number;
+}
+
+export interface OrganizedStatsPrimary {
+  strength: number;
+  dexterity: number;
+  intelligence: number;
+  vitality: number;
+  damage: number;
+  toughness: number;
+  recovery: number;
+}
+
+export interface OrganizedStatsOffense {
+  dmgIncreasedByPrimary?: number;
+  dmgIncreasedBySkills?: number;
+  bonusDamageToElites?: number;
+  attacksPerSecond?: number;
+  attackSpeedIncrease?: number;
+  criticalHitChance?: number;
+  criticalHitDamage?: number;
+  areaDamage?: number;
+  cooldownReduction?: number;
+}
+
+export interface OrganizedStatsGeneric {
+  name: string;
+  object: Object;
+}
+
 export interface DetailedHeroData {
   code?: string;
   reason?: string;
