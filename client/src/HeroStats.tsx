@@ -73,6 +73,7 @@ function HeroStats(props: HeroStatsProps) {
     }
 
     function calculateAdditiveStats(attributes: string[], multiplier: number = 1) {
+      attributes &&
       attributes.forEach((attribute) => {
         const attributeLower = attribute.toLowerCase();
         if (attributeLower.includes("critical hit damage")) {

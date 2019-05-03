@@ -78,8 +78,6 @@ function GearItem(props: GearItemProps) {
     </div>
   );
 
-
-
   return (
     <div
       className={`GearItem ${itemType} ${props.gearSpot} ${props.detailedItem.typeName.includes("Primal") ? "Primal" : ""}`}
