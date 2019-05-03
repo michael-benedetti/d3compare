@@ -25,14 +25,12 @@ const theme = createMuiTheme({
         fontSize: "14px",
         display: "inline-block",
         backgroundColor: "black",
-        padding: "10px",
         border: "2px solid #444433",
         boxShadow: "2px 2px 2px black",
       },
     }
   }
 });
-
 
 export interface IAppContext {
   hoveredStat: HoverStat;

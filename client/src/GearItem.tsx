@@ -19,23 +19,6 @@ function GearItem(props: GearItemProps) {
   const secondaryAttributes = item.attributesHtml && item.attributesHtml.secondary || [];
   const setDescription = item.set && item.set.descriptionHtml || "";
   const appContext = useContext<IAppContext>(AppContext);
-  const tooltip = (
-    <div>
-      <h3>{item.typeName}</h3>
-      <h2>{item.name}</h2>
-      {primaryAttributes.map((attribute: string) => <div key={attribute}
-                                                         dangerouslySetInnerHTML={{__html: attribute}}/>)}
-      {secondaryAttributes.map((attribute: string) => <div key={attribute}
-                                                           dangerouslySetInnerHTML={{__html: attribute}}/>)}
-      <div dangerouslySetInnerHTML={{__html: setDescription}}/>
-      <br/>
-      <div className={"Gems"}>
-        {item.gems && item.gems.map((gem, i) =>
-          <div className="Gem" key={`${props.heroIndex}-${gem.item.slug}-${i}`}><img
-            src={`http://media.blizzard.com/d3/icons/items/small/${gem.item.icon}.png`}/>{`${gem.attributes}`}</div>)}
-      </div>
-    </div>
-  );
 
   let itemType: string = "Normal";
   if (item.typeName.includes("Set")) {
@@ -48,9 +31,59 @@ function GearItem(props: GearItemProps) {
     itemType = "Magic";
   }
 
+  const tooltip = (
+    <div>
+      <div>
+        <h2 className={`GearItemName GearItem${itemType}`}>{item.name}</h2>
+      </div>
+      <div>
+        <span style={{float: "left"}}>
+          <img className={itemType} style={{marginRight: "10px"}}
+            src={`http://media.blizzard.com/d3/icons/items/large/${itemIcon}.png`}
+          />
+        </span>
+        <div>
+          <div className={`GearItemTypeName GearItem${itemType}`}>{item.typeName}</div>
+          {!!item.dps && (
+            <>
+              <div className="GearItemPrimaryStat">{item.dps}</div>
+              <div className="GearItemStat">Damage Per Second</div>
+              <div className="GearItemStat"><span className="GearItemStatDetails">{`${item.minDamage}-${item.maxDamage}`}</span> Damage</div>
+              <div className="GearItemStat"><span className="GearItemStatDetails">{item.attacksPerSecond}</span> Attacks per Second</div>
+            </>
+          )}
+          {!!item.armor && (
+            <>
+              <div className="GearItemPrimaryStat">{Math.round(item.armor)}</div>
+              <div className="GearItemStat">Armor</div>
+              {!!item.blockChance && <div className={"GearItemStat"}><span className="GearItemStatDetails">{item.blockChance.match(/^\+\d+\.\d+% /g)}</span>Chance to Block</div>}
+              {!!item.blockChance && <div className={"GearItemStat"}><span className="GearItemStatDetails">{item.blockChance.match(/[0-9,]+-[0-9,]+ /g)}</span>Block Amount</div>}
+            </>
+          )}
+          <div style={{display: "block", clear: "both", marginBottom: "20px"}}/>
+          {primaryAttributes.map((attribute: string) => <div key={attribute}
+                                                             dangerouslySetInnerHTML={{__html: attribute}}/>)}
+          {secondaryAttributes.map((attribute: string) => <div key={attribute}
+                                                               dangerouslySetInnerHTML={{__html: attribute}}/>)}
+          <div dangerouslySetInnerHTML={{__html: setDescription}}/>
+          <br/>
+          <div className={"Gems"}>
+            {item.gems && item.gems.map((gem, i) =>
+              <div className="Gem" key={`${props.heroIndex}-${gem.item.slug}-${i}`}><img
+                src={`http://media.blizzard.com/d3/icons/items/small/${gem.item.icon}.png`}/>{`${gem.attributes}`}
+              </div>)}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+
+
   return (
-    <div className={`GearItem ${itemType} ${props.gearSpot} ${props.detailedItem.typeName.includes("Primal") ? "Primal" : ""}`}
-         style={{overflow: props.gearSpot === "torso" ? "hidden" : ""}}>
+    <div
+      className={`GearItem ${itemType} ${props.gearSpot} ${props.detailedItem.typeName.includes("Primal") ? "Primal" : ""}`}
+      style={{overflow: props.gearSpot === "torso" ? "hidden" : ""}}>
       <Tooltip
         title={tooltip}
         open={appContext.tooltipVisible == props.gearSpot}

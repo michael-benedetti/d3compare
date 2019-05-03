@@ -143,6 +143,7 @@ export interface DetailedItem {
     id: string;
   };
   armor: number;
+  blockChance?: string;
   damage?: string;
   dps?: string;
   attacksPerSecond: number;
