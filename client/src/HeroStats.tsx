@@ -100,9 +100,32 @@ function HeroStats(props: HeroStatsProps) {
       });
     }
 
+    function processJewel(attributes: string[]) {
+      const jewelName = attributes[0].split(" - ")[0];
+      let regExp;
+      let match;
+
+      switch (jewelName) {
+        case "Boyarsky's Chip":
+          regExp = /Adds ([0-9,]+) Thorns/g;
+          match = regExp.exec(attributes[0]);
+          if (match && match[1]) result.thorns += parseInt(match[1].replace(",", ""));
+          break;
+        case "Bane of the Powerful":
+          regExp = /Rank ([0-9]+)/g;
+          match = regExp.exec(attributes[0]);
+          if (match && match[1] && parseInt(match[1]) >= 25) {
+            result.bonusDamageToElites += .15;
+            result.eliteDamageReduciton += .15;
+          }
+          break;
+      }
+    }
+
     Object.keys(props.detailedItems).forEach((item) => {
       props.detailedItems[item].gems && props.detailedItems[item].gems.forEach((gem: Gem) => {
-        calculateAdditiveStats(gem.attributes, props.detailedItems[item].name === "Leoric's Crown" || props.hero.legendaryPowers[1].name === "Leoric's Crown" ? 2 : 1);
+        if (gem.isJewel) processJewel(gem.attributes);
+        else calculateAdditiveStats(gem.attributes, props.detailedItems[item].name === "Leoric's Crown" || props.hero.legendaryPowers[1].name === "Leoric's Crown" ? 2 : 1);
       });
       calculateAdditiveStats(props.detailedItems[item].attributes.primary);
       calculateAdditiveStats(props.detailedItems[item].attributes.secondary);
@@ -222,7 +245,6 @@ function HeroStats(props: HeroStatsProps) {
                     heroIndex: props.heroIndex
                   })}
                   style={determineStyles(stat, section.object)}
-                  // style={{display: "flex", justifyContent: "space-between"}}
                 >
                   <div>{startCase(stat)}</div>
                   <div>{processStat(stat, section.object)}</div>
