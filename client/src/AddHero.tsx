@@ -5,12 +5,14 @@ import * as React from "react";
 import {useState} from "react";
 import {HeroIdentifier} from "./helpers/interfaces";
 import uniqid = require("uniqid");
-import './css/AddHero.css';
+import "./css/AddHero.css";
+
 
 interface AddHeroProps {
   handleAddHero: (heroIdentifier: HeroIdentifier) => void;
   heroIdentifiers: HeroIdentifier[];
   handleAddLeaderboardHero: (leaderboard: string, rank: number) => void;
+  loadingLeaderboardHero: boolean;
 }
 
 function AddHero(props: AddHeroProps) {
@@ -30,7 +32,7 @@ function AddHero(props: AddHeroProps) {
           fontWeight: "bold",
           textShadow: "1px 1px 1px black"
         }}
-        disabled={props.heroIdentifiers.length >= 4}
+        disabled={props.heroIdentifiers.length >= 4 || props.loadingLeaderboardHero}
       >
         Add Hero
       </Button>
@@ -46,7 +48,7 @@ function AddHero(props: AddHeroProps) {
           fontWeight: "bold",
           textShadow: "1px 1px 1px black"
         }}
-        disabled={props.heroIdentifiers.length >= 4}
+        disabled={props.heroIdentifiers.length >= 4 || props.loadingLeaderboardHero}
       >
         Add Leaderboard Hero
       </Button>

@@ -8,6 +8,7 @@ import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import uniqid = require('uniqid');
 import AddHero from "./AddHero";
+import {LinearProgress} from "@material-ui/core";
 
 interface AppProps {
   history: History;
@@ -18,6 +19,9 @@ interface AppProps {
 const theme = createMuiTheme({
   palette: {
     type: 'dark',
+    primary: {
+      main: "#ff0000",
+    }
   },
   overrides: {
     MuiTooltip: {
@@ -57,6 +61,7 @@ function App(props: AppProps) {
   const [tooltipVisible, setTooltipVisible] = useState<string>("");
   const [selectedStat, setSelectedStat] = useState<HoverStat>({stat: "", statValue: "", heroIndex: -1});
   const [heroIdentifiers, setHeroIdentifiers] = useState<HeroIdentifier[]>(props.heroIdentifiers);
+  const [loadingLeaderboardHero, setLoadingLeaderboardHero] = useState<boolean>(false);
 
 
   function handleShowTooltip(tooltipId: string) {
@@ -95,14 +100,16 @@ function App(props: AppProps) {
   }
 
   async function handleAddLeaderboardHero(leaderboard: string, rank: number) {
+    setLoadingLeaderboardHero(true);
     const leaderboardTypes = ["hardcore-barbarian", "barbarian", "hardcore-crusader", "crusader", "hardcore-dh", "dh", "hardcore-monk", "monk", "hardcore-wd", "wd", "hardcore-wizard", "wizard"];
     const leaderboardType = leaderboard !== "random" ? leaderboard : leaderboardTypes[Math.floor(Math.random() * leaderboardTypes.length)];
-    const leaders: Leaderboard = await props.d3Repository.getLeaderboard("16", `rift-${leaderboardType}`);
+    const leaders: Leaderboard = await props.d3Repository.getLeaderboard("16", `rift-${leaderboardType}`).catch(() => setLoadingLeaderboardHero(false));
     const heroData: LeaderData[] = leaders.row[rank !== -1 ? rank - 1 : Math.floor(Math.random() * leaders.row.length)].player[0].data;
     const battleTag: string = heroData.find((data: LeaderData) => data.id === "HeroBattleTag")!.string || "";
     const heroId: string = heroData.find((data: LeaderData) => data.id === "HeroId")!.number!.toString() || "";
 
     handleAddHero({region: "us", account: battleTag, heroId, key: uniqid.process()});
+    setLoadingLeaderboardHero(false);
   }
 
   function handleSelectedStatChange(hoverStat: HoverStat) {
@@ -121,12 +128,14 @@ function App(props: AppProps) {
         }}
       >
         <div className="App">
+          {loadingLeaderboardHero && <LinearProgress style={{width: "100%", position: "absolute"}}/>}
           <div className={"MenuBar"}>
             <div className={"Title"}>D3Compare.com</div>
             <AddHero
               handleAddHero={handleAddHero}
               handleAddLeaderboardHero={handleAddLeaderboardHero}
               heroIdentifiers={heroIdentifiers}
+              loadingLeaderboardHero={loadingLeaderboardHero}
             />
           </div>
           <div className={"Workspace"}>
