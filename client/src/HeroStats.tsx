@@ -76,6 +76,7 @@ function HeroStats(props: HeroStatsProps) {
       attributes &&
       attributes.forEach((attribute) => {
         const attributeLower = attribute.toLowerCase();
+        if (attributeLower.includes("life")) console.log(attributeLower);
         if (attributeLower.includes("critical hit damage")) {
           result.criticalHitDamage += (parseFloat(attributeLower.match(/\d+(\.\d+)?/g)![0]) / 100) * multiplier;
         } else if (attributeLower.includes("critical hit chance")) {
@@ -125,7 +126,8 @@ function HeroStats(props: HeroStatsProps) {
     Object.keys(props.detailedItems).forEach((item) => {
       props.detailedItems[item].gems && props.detailedItems[item].gems.forEach((gem: Gem) => {
         if (gem.isJewel) processJewel(gem.attributes);
-        else calculateAdditiveStats(gem.attributes, props.detailedItems[item].name === "Leoric's Crown" || props.hero.legendaryPowers[1].name === "Leoric's Crown" ? 2 : 1);
+        else calculateAdditiveStats(gem.attributes, props.detailedItems[item].name === "Leoric's Crown"
+        || props.hero.legendaryPowers && props.hero.legendaryPowers[1] && props.hero.legendaryPowers[1].name === "Leoric's Crown" ? 2 : 1);
       });
       calculateAdditiveStats(props.detailedItems[item].attributes.primary);
       calculateAdditiveStats(props.detailedItems[item].attributes.secondary);
@@ -159,7 +161,7 @@ function HeroStats(props: HeroStatsProps) {
     };
 
     const defense: OrganizedStatsDefense = {
-      armor: stats.armor,
+      armor: stats.armor + stats.strength + stats.dexterity,
       blockAmountMin: stats.blockAmountMin,
       blockAmountMax: stats.blockAmountMax,
       blockChance: stats.blockChance,

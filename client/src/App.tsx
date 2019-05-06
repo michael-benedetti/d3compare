@@ -19,9 +19,9 @@ interface AppProps {
 const theme = createMuiTheme({
   palette: {
     type: 'dark',
-    primary: {
+    secondary: {
       main: "#ff0000",
-    }
+    },
   },
   overrides: {
     MuiTooltip: {
@@ -32,7 +32,7 @@ const theme = createMuiTheme({
         border: "2px solid #444433",
         boxShadow: "2px 2px 2px black",
       },
-    }
+    },
   }
 });
 
@@ -128,7 +128,7 @@ function App(props: AppProps) {
         }}
       >
         <div className="App">
-          {loadingLeaderboardHero && <LinearProgress style={{width: "100%", position: "absolute"}}/>}
+          {loadingLeaderboardHero && <LinearProgress color={"secondary"} style={{width: "100%", position: "absolute"}}/>}
           <div className={"MenuBar"}>
             <div className={"Title"}>D3Compare.com</div>
             <AddHero
