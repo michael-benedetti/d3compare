@@ -48,8 +48,8 @@ function GearItem(props: GearItemProps) {
             <>
               <div className="GearItemPrimaryStat">{item.dps}</div>
               <div className="GearItemStat">Damage Per Second</div>
-              <div className="GearItemStat"><span className="GearItemStatDetails">{`${item.minDamage}-${item.maxDamage}`}</span> Damage</div>
-              <div className="GearItemStat"><span className="GearItemStatDetails">{item.attacksPerSecond}</span> Attacks per Second</div>
+              <div className="GearItemStat"><span className="GearItemStatDetails">{`${Math.round(item.minDamage)}-${Math.round(item.maxDamage)}`}</span> Damage</div>
+              <div className="GearItemStat"><span className="GearItemStatDetails">{Math.round(item.attacksPerSecond * 100) / 100}</span> Attacks per Second</div>
             </>
           )}
           {!!item.armor && (
