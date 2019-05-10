@@ -61,10 +61,10 @@ function GearItem(props: GearItemProps) {
             </>
           )}
           <div style={{display: "block", clear: "both", marginBottom: "20px"}}/>
-          {primaryAttributes.map((attribute: string) => <div key={attribute}
-                                                             dangerouslySetInnerHTML={{__html: attribute}}/>)}
-          {secondaryAttributes.map((attribute: string) => <div key={attribute}
-                                                               dangerouslySetInnerHTML={{__html: attribute}}/>)}
+          {primaryAttributes.map((attribute: string) =>
+            <div key={attribute} dangerouslySetInnerHTML={{__html: attribute}}/>)}
+          {secondaryAttributes.map((attribute: string) =>
+            <div key={attribute} dangerouslySetInnerHTML={{__html: attribute}}/>)}
           <div dangerouslySetInnerHTML={{__html: setDescription}}/>
           <br/>
           <div className={"Gems"}>
