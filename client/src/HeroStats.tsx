@@ -60,13 +60,13 @@ function HeroStats(props: HeroStatsProps) {
         case "wizard":
         case "necromancer":
         case "witch-doctor":
-          return props.hero.stats.intelligence/100;
+          return props.hero.stats.intelligence / 100;
         case "barbarian":
         case "crusader":
-          return props.hero.stats.strength/100;
+          return props.hero.stats.strength / 100;
         case "demon-hunter":
         case "monk":
-          return props.hero.stats.dexterity/100;
+          return props.hero.stats.dexterity / 100;
         default:
           return 0;
       }
@@ -89,8 +89,8 @@ function HeroStats(props: HeroStatsProps) {
           result.eliteDamageReduciton += (parseFloat(attributeLower.match(/\d+(\.\d+)?/g)![0]) / 100) * multiplier;
         } else if (attributeLower.includes("increases damage against elites")) {
           result.bonusDamageToElites += (parseFloat(attributeLower.match(/\d+(\.\d+)?/g)![0]) / 100) * multiplier;
-        // } else if (attributeLower.includes("Increases attack speed")) {
-        //   result.attackSpeedIncrease (+= parseInt(attributeLower.match(/\d+(\.\d+)?/g)![0]) / 100) * multiplier;
+          // } else if (attributeLower.includes("Increases attack speed")) {
+          //   result.attackSpeedIncrease (+= parseInt(attributeLower.match(/\d+(\.\d+)?/g)![0]) / 100) * multiplier;
         } else if (attributeLower.includes("resistance to all elements")) {
           result.resistanceToAllElements += (parseInt(attributeLower.match(/\d+(\.\d+)?/g)![0])) * multiplier;
         } else if (attributeLower.includes("life per hit")) {
@@ -139,6 +139,7 @@ function HeroStats(props: HeroStatsProps) {
   function organizeStats(stats: Stats): OrganizedStatsGeneric[] {
     const calculatedStats = calculateStats();
     const primary: OrganizedStatsPrimary = {
+      highestSoloRiftCompleted: props.hero.highestSoloRiftCompleted,
       strength: stats.strength,
       dexterity: stats.dexterity,
       intelligence: stats.intelligence,

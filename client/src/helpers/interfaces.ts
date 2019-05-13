@@ -258,6 +258,7 @@ export interface OrganizedStatsLife {
 }
 
 export interface OrganizedStatsPrimary {
+  highestSoloRiftCompleted: number;
   strength: number;
   dexterity: number;
   intelligence: number;
