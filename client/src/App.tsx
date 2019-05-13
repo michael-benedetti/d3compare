@@ -85,9 +85,13 @@ function App(props: AppProps) {
     setHeroIdentifiers(newHeroIdentifiers);
   }
 
+  function updateHistory(newHeroIdentifiers: HeroIdentifier[]) {
+    props.history.replace(newHeroIdentifiers.length > 0 ? `?heros=${composeHeroInentifiersIntoParam(newHeroIdentifiers)}` : "/");
+  }
+
   async function handleRemoveHero(heroIndex: number) {
     const newHeroIdentifiers = heroIdentifiers.filter((hero, i) => i !== heroIndex);
-    props.history.replace(`?heros=${composeHeroInentifiersIntoParam(newHeroIdentifiers)}`);
+    updateHistory(newHeroIdentifiers);
     setHeroIdentifiers(newHeroIdentifiers);
   }
 
@@ -95,7 +99,7 @@ function App(props: AppProps) {
     const newHeroIdentifiers = heroIdentifiers.map((heroIdentifier, i) => {
       return i === heroIndex ? newHeroIdentifier : heroIdentifier;
     });
-    props.history.replace(`?heros=${composeHeroInentifiersIntoParam(newHeroIdentifiers)}`);
+    updateHistory(newHeroIdentifiers);
     setHeroIdentifiers(newHeroIdentifiers);
   }
 

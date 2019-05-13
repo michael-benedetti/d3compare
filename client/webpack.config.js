@@ -20,6 +20,9 @@ module.exports = {
     splitChunks: {
       chunks: "all",
     },
+    minimize: true,
+    nodeEnv: 'production',
+    mangleWasmImports: true,
   },
 
   plugins: [
@@ -27,7 +30,6 @@ module.exports = {
       template: "../public/index.html",
       baseUrl: "/",
     }),
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
   ],
 
   module: {
