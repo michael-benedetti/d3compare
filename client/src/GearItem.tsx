@@ -95,14 +95,13 @@ function GearItem(props: GearItemProps) {
 
       >
         <div
+          style={{height: "100%"}}
           onMouseEnter={() => appContext.handleShowTooltip(props.gearSpot)}
           onMouseLeave={() => appContext.handleShowTooltip("")}
         >
           {props.detailedItem.gems &&
           <span className="SocketsWrapper" style={{
             top: `calc(50% - ${16 * props.detailedItem.gems.length}px`,
-            width: "100%",
-            height: "100%",
             display: "block",
             position: "absolute",
             left: "calc(50% - 17px)",
@@ -110,21 +109,20 @@ function GearItem(props: GearItemProps) {
             <span className="SocketsAlign">
               {props.detailedItem.gems && props.detailedItem.gems.map((gem) =>
                 <span className="Socket">
-                    <img className="SocketGem" src={`http://media.blizzard.com/d3/icons/items/small/${gem.item.icon}.png`}/>
+                    <img className="SocketGem"
+                         src={`http://media.blizzard.com/d3/icons/items/small/${gem.item.icon}.png`}/>
                   </span>
               )}
             </span>
           </span>
           }
-          <span>
-            <img
-              className="GearImage"
-              id={`img-${props.gearSpot}`}
-              alt={props.gearSpot}
-              onClick={() => appContext.handleShowTooltip(props.gearSpot)}
-              src={`http://media.blizzard.com/d3/icons/items/large/${itemIcon}.png`}
-            />
-          </span>
+          <img
+            className="GearImage"
+            id={`img-${props.gearSpot}`}
+            alt={props.gearSpot}
+            onClick={() => appContext.handleShowTooltip(props.gearSpot)}
+            src={`http://media.blizzard.com/d3/icons/items/large/${itemIcon}.png`}
+          />
         </div>
       </Tooltip>
     </div>
