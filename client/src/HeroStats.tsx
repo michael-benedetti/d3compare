@@ -76,7 +76,6 @@ function HeroStats(props: HeroStatsProps) {
       attributes &&
       attributes.forEach((attribute) => {
         const attributeLower = attribute.toLowerCase();
-        if (attributeLower.includes("life")) console.log(attributeLower);
         if (attributeLower.includes("critical hit damage")) {
           result.criticalHitDamage += (parseFloat(attributeLower.match(/\d+(\.\d+)?/g)![0]) / 100) * multiplier;
         } else if (attributeLower.includes("critical hit chance")) {
