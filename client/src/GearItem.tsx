@@ -39,7 +39,7 @@ function GearItem(props: GearItemProps) {
       <div>
         <span style={{float: "left"}}>
           <img className={itemType} style={{marginRight: "10px"}}
-            src={`http://media.blizzard.com/d3/icons/items/large/${itemIcon}.png`}
+               src={`http://media.blizzard.com/d3/icons/items/large/${itemIcon}.png`}
           />
         </span>
         <div>
@@ -48,16 +48,23 @@ function GearItem(props: GearItemProps) {
             <>
               <div className="GearItemPrimaryStat">{item.dps}</div>
               <div className="GearItemStat">Damage Per Second</div>
-              <div className="GearItemStat"><span className="GearItemStatDetails">{`${Math.round(item.minDamage)}-${Math.round(item.maxDamage)}`}</span> Damage</div>
-              <div className="GearItemStat"><span className="GearItemStatDetails">{Math.round(item.attacksPerSecond * 100) / 100}</span> Attacks per Second</div>
+              <div className="GearItemStat"><span
+                className="GearItemStatDetails">{`${Math.round(item.minDamage)}-${Math.round(item.maxDamage)}`}</span> Damage
+              </div>
+              <div className="GearItemStat"><span
+                className="GearItemStatDetails">{Math.round(item.attacksPerSecond * 100) / 100}</span> Attacks per
+                Second
+              </div>
             </>
           )}
           {!!item.armor && (
             <>
               <div className="GearItemPrimaryStat">{Math.round(item.armor)}</div>
               <div className="GearItemStat">Armor</div>
-              {!!item.blockChance && <div className={"GearItemStat"}><span className="GearItemStatDetails">{item.blockChance.match(/^\+\d+\.\d+% /g)}</span>Chance to Block</div>}
-              {!!item.blockChance && <div className={"GearItemStat"}><span className="GearItemStatDetails">{item.blockChance.match(/[0-9,]+-[0-9,]+ /g)}</span>Block Amount</div>}
+              {!!item.blockChance && <div className={"GearItemStat"}><span
+                className="GearItemStatDetails">{item.blockChance.match(/^\+\d+\.\d+% /g)}</span>Chance to Block</div>}
+              {!!item.blockChance && <div className={"GearItemStat"}><span
+                className="GearItemStatDetails">{item.blockChance.match(/[0-9,]+-[0-9,]+ /g)}</span>Block Amount</div>}
             </>
           )}
           <div style={{display: "block", clear: "both", marginBottom: "20px"}}/>
@@ -85,15 +92,40 @@ function GearItem(props: GearItemProps) {
       <Tooltip
         title={tooltip}
         open={appContext.tooltipVisible == props.gearSpot}
+
       >
-        <img
-          id={`img-${props.gearSpot}`}
-          alt={props.gearSpot}
-          onClick={() => appContext.handleShowTooltip(props.gearSpot)}
+        <div
           onMouseEnter={() => appContext.handleShowTooltip(props.gearSpot)}
           onMouseLeave={() => appContext.handleShowTooltip("")}
-          src={`http://media.blizzard.com/d3/icons/items/large/${itemIcon}.png`}
-        />
+        >
+          {props.detailedItem.gems &&
+          <span className="SocketsWrapper" style={{
+            top: `calc(50% - ${16 * props.detailedItem.gems.length}px`,
+            width: "100%",
+            height: "100%",
+            display: "block",
+            position: "absolute",
+            left: "calc(50% - 17px)",
+          }}>
+            <span className="SocketsAlign">
+              {props.detailedItem.gems && props.detailedItem.gems.map((gem) =>
+                <span className="Socket">
+                    <img className="SocketGem" src={`http://media.blizzard.com/d3/icons/items/small/${gem.item.icon}.png`}/>
+                  </span>
+              )}
+            </span>
+          </span>
+          }
+          <span>
+            <img
+              className="GearImage"
+              id={`img-${props.gearSpot}`}
+              alt={props.gearSpot}
+              onClick={() => appContext.handleShowTooltip(props.gearSpot)}
+              src={`http://media.blizzard.com/d3/icons/items/large/${itemIcon}.png`}
+            />
+          </span>
+        </div>
       </Tooltip>
     </div>
   );

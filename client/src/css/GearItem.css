@@ -3,6 +3,7 @@
     display: block;
     border-radius: 3px;
     box-shadow: 2px 2px 2px black;
+    z-index: 0;
 }
 
 .GearItemName {
@@ -55,6 +56,40 @@
 .GearItemNormal {
     color: white;
 }
+
+.SocketsWrapper {
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    left: calc(50% - 17px);
+    opacity: 0.8;
+}
+
+.SocketsAlign {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.Socket {
+    display: inline-block;
+    vertical-align: middle;
+    width: 32px;
+    height: 32px;
+    background: url(https://us.diablo3.com/static/images/profile/hero/skill-overlays.png) 0 -71px no-repeat;
+    text-align: center;
+    position: relative;
+    left: 1px;
+}
+
+.SocketGem {
+    margin: 6px auto 0;
+    width: 20px;
+    height: 20px;
+    z-index: 2;
+}
+
 
 .Set {
     border: 1px solid green;
@@ -125,6 +160,10 @@ h1, h2 {
 
 img {
     position: relative;
+}
+
+.GearImage {
+    z-index: -1;
 }
 
 .d3-color-ffffffff {
