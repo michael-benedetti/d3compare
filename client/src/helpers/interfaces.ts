@@ -126,6 +126,40 @@ interface SetData {
   "descriptionHtml": string;
 }
 
+export interface Attribute {
+  "textHtml": string,
+  "text": string,
+}
+
+export interface Item {
+  "id": string,
+  "slug": string,
+  "name": string,
+  "icon": string,
+  "tooltipParams": string,
+  "requiredLevel": number,
+  "stackSizeMax": number,
+  "accountBound": boolean,
+  "flavorText": string,
+  "flavorTextHtml": string,
+  "typeName": string,
+  "type": {
+    "twoHanded": boolean,
+    "id": string,
+  },
+  "color": string,
+  "isSeasonRequiredToDrop": boolean,
+  "seasonRequiredToDrop": number,
+  "slots": string[],
+  "attributes": {
+    "primary": Attribute[],
+    "secondary": Attribute[],
+    "other": Attribute[],
+  },
+  "randomAffixes": [],
+  "setItems": [],
+}
+
 export interface DetailedItem {
   id: string;
   name: string;

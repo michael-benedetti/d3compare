@@ -9,6 +9,14 @@
     grid-gap: 10px;
 }
 
+.PassiveSkillTooltip {
+    display: grid;
+    grid-template-areas: "skill-name skill-name"
+                         "pri-img pri-desc";
+    grid-template-columns: auto auto;
+    grid-gap: 10px;
+}
+
 .skill-name {
     grid-area: skill-name;
     text-align: center;
