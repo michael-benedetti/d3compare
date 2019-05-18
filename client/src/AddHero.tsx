@@ -67,12 +67,14 @@ function AddHero(props: AddHeroProps) {
         <MenuItem key={"crusader"} value={"crusader"}>Crusader</MenuItem>
         <MenuItem key={"dh"} value={"dh"}>Demon Hunter</MenuItem>
         <MenuItem key={"monk"} value={"monk"}>Monk</MenuItem>
+        <MenuItem key={"necromancer"} value={"necromancer"}>Necromancer</MenuItem>
         <MenuItem key={"wd"} value={"wd"}>Witch Doctor</MenuItem>
         <MenuItem key={"wizard"} value={"wizard"}>Wizard</MenuItem>
         <MenuItem style={{color: "red"}} key={"hardcore-barbarian"} value={"hardcore-barbarian"}>HC Barbarian</MenuItem>
         <MenuItem style={{color: "red"}} key={"hardcore-crusader"} value={"hardcore-crusader"}>HC Crusader</MenuItem>
         <MenuItem style={{color: "red"}} key={"hardcore-dh"} value={"hardcore-dh"}>HC Demon Hunter</MenuItem>
         <MenuItem style={{color: "red"}} key={"hardcore-monk"} value={"hardcore-monk"}>HC Monk</MenuItem>
+        <MenuItem style={{color: "red"}} key={"hardcore-necromancer"} value={"hardcore-necromancer"}>HC Necromancer</MenuItem>
         <MenuItem style={{color: "red"}} key={"hardcore-wd"} value={"hardcore-wd"}>HC Witch Doctor</MenuItem>
         <MenuItem style={{color: "red"}} key={"hardcore-wizard"} value={"hardcore-wizard"}>HC Wizard</MenuItem>
       </TextField>

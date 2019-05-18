@@ -105,7 +105,7 @@ function App(props: AppProps) {
 
   async function handleAddLeaderboardHero(leaderboard: string, rank: number) {
     setLoadingLeaderboardHero(true);
-    const leaderboardTypes = ["hardcore-barbarian", "barbarian", "hardcore-crusader", "crusader", "hardcore-dh", "dh", "hardcore-monk", "monk", "hardcore-wd", "wd", "hardcore-wizard", "wizard"];
+    const leaderboardTypes = ["hardcore-barbarian", "barbarian", "hardcore-crusader", "crusader", "hardcore-dh", "dh", "hardcore-monk", "monk", "hardcore-necromancer", "necromancer", "hardcore-wd", "wd", "hardcore-wizard", "wizard"];
     const leaderboardType = leaderboard !== "random" ? leaderboard : leaderboardTypes[Math.floor(Math.random() * leaderboardTypes.length)];
     const leaders: Leaderboard = await props.d3Repository.getLeaderboard("17", `rift-${leaderboardType}`).catch(() => setLoadingLeaderboardHero(false));
     const heroData: LeaderData[] = leaders.row[rank !== -1 ? rank - 1 : Math.floor(Math.random() * leaders.row.length)].player[0].data;
