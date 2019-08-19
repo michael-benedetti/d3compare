@@ -1,5 +1,5 @@
 import * as  React from 'react';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import './css/App.css';
 import {D3Repository, HeroIdentifier, HoverStat, Leaderboard, LeaderData} from "./helpers/interfaces";
 import HeroCard from "./HeroCard";
@@ -51,7 +51,8 @@ export const AppContext = React.createContext<IAppContext>({
     getProfile: () => Promise.resolve({}),
     getHero: () => Promise.resolve({}),
     getDetailedItems: () => Promise.resolve({}),
-    getLeaderboard: () => Promise.resolve({})
+    getLeaderboard: () => Promise.resolve({}),
+    getSeasons: () => Promise.resolve({}),
   },
   tooltipVisible: "",
   handleShowTooltip: () => {},
@@ -62,13 +63,19 @@ function App(props: AppProps) {
   const [selectedStat, setSelectedStat] = useState<HoverStat>({stat: "", statValue: "", heroIndex: -1});
   const [heroIdentifiers, setHeroIdentifiers] = useState<HeroIdentifier[]>(props.heroIdentifiers);
   const [loadingLeaderboardHero, setLoadingLeaderboardHero] = useState<boolean>(false);
+  const [seasons, setSeasons] = useState<number>(0);
 
+  useEffect(() => {
+    props.d3Repository.getSeasons().then((seasonsObject) => {
+        setSeasons(seasonsObject.season.length);
+      });
+  }, []);
 
   function handleShowTooltip(tooltipId: string) {
     setTooltipVisible(tooltipId);
   }
 
-  function composeHeroInentifiersIntoParam(newHeroIdentifiers: HeroIdentifier[]) {
+  function composeHeroIdentifiersIntoParam(newHeroIdentifiers: HeroIdentifier[]) {
     const paramStrings: string[] = newHeroIdentifiers.map((heroIdentifier) => {
       const {region, account, heroId} = heroIdentifier;
       return [region, account.replace("#", "-"), heroId].join(",");
@@ -81,12 +88,12 @@ function App(props: AppProps) {
       return;
     }
     const newHeroIdentifiers = [...heroIdentifiers, newHero];
-    props.history.replace(`?heros=${composeHeroInentifiersIntoParam(newHeroIdentifiers)}`);
+    props.history.replace(`?heros=${composeHeroIdentifiersIntoParam(newHeroIdentifiers)}`);
     setHeroIdentifiers(newHeroIdentifiers);
   }
 
   function updateHistory(newHeroIdentifiers: HeroIdentifier[]) {
-    props.history.replace(newHeroIdentifiers.length > 0 ? `?heros=${composeHeroInentifiersIntoParam(newHeroIdentifiers)}` : "/");
+    props.history.replace(newHeroIdentifiers.length > 0 ? `?heros=${composeHeroIdentifiersIntoParam(newHeroIdentifiers)}` : "/");
   }
 
   async function handleRemoveHero(heroIndex: number) {
@@ -103,11 +110,11 @@ function App(props: AppProps) {
     setHeroIdentifiers(newHeroIdentifiers);
   }
 
-  async function handleAddLeaderboardHero(leaderboard: string, rank: number) {
+  async function handleAddLeaderboardHero(season: number, leaderboard: string, rank: number) {
     setLoadingLeaderboardHero(true);
     const leaderboardTypes = ["hardcore-barbarian", "barbarian", "hardcore-crusader", "crusader", "hardcore-dh", "dh", "hardcore-monk", "monk", "hardcore-necromancer", "necromancer", "hardcore-wd", "wd", "hardcore-wizard", "wizard"];
     const leaderboardType = leaderboard !== "random" ? leaderboard : leaderboardTypes[Math.floor(Math.random() * leaderboardTypes.length)];
-    const leaders: Leaderboard = await props.d3Repository.getLeaderboard("17", `rift-${leaderboardType}`).catch(() => setLoadingLeaderboardHero(false));
+    const leaders: Leaderboard = await props.d3Repository.getLeaderboard(season.toString(), `rift-${leaderboardType}`).catch(() => setLoadingLeaderboardHero(false));
     const heroData: LeaderData[] = leaders.row[rank !== -1 ? rank - 1 : Math.floor(Math.random() * leaders.row.length)].player[0].data;
     const battleTag: string = heroData.find((data: LeaderData) => data.id === "HeroBattleTag")!.string || "";
     const heroId: string = heroData.find((data: LeaderData) => data.id === "HeroId")!.number!.toString() || "";
@@ -140,6 +147,7 @@ function App(props: AppProps) {
               handleAddLeaderboardHero={handleAddLeaderboardHero}
               heroIdentifiers={heroIdentifiers}
               loadingLeaderboardHero={loadingLeaderboardHero}
+              seasons={seasons}
             />
           </div>
           <div className={"Workspace"}>

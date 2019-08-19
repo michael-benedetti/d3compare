@@ -2,7 +2,7 @@ import {Button} from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import * as React from "react";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {HeroIdentifier} from "./helpers/interfaces";
 import uniqid = require("uniqid");
 import "./css/AddHero.css";
@@ -11,13 +11,19 @@ import "./css/AddHero.css";
 interface AddHeroProps {
   handleAddHero: (heroIdentifier: HeroIdentifier) => void;
   heroIdentifiers: HeroIdentifier[];
-  handleAddLeaderboardHero: (leaderboard: string, rank: number) => void;
+  handleAddLeaderboardHero: (season: number, leaderboard: string, rank: number) => void;
   loadingLeaderboardHero: boolean;
+  seasons: number;
 }
 
 function AddHero(props: AddHeroProps) {
   const [leaderboard, setLeaderboard] = useState<string>("random");
   const [rank, setRank] = useState<number>(-1);
+  const [season, setSeason] = useState<number>(0);
+
+  useEffect(() => {
+    setSeason(props.seasons);
+  }, [props.seasons]);
 
   return (
     <div className={"AddHeroBar"}>
@@ -39,7 +45,7 @@ function AddHero(props: AddHeroProps) {
       <div className={"Divider MenuItem"}/>
       <Button
         className={"AddHeroButton MenuItem"}
-        onClick={() => props.handleAddLeaderboardHero(leaderboard, rank)}
+        onClick={() => props.handleAddLeaderboardHero(season, leaderboard, rank)}
         style={{
           padding: "5px",
           whiteSpace: "nowrap",
@@ -52,6 +58,20 @@ function AddHero(props: AddHeroProps) {
       >
         Add Leaderboard Hero
       </Button>
+      <TextField
+        className={"MenuItem"}
+        select
+        label="Season"
+        id="season"
+        value={season}
+        onChange={(e) => setSeason(parseInt(e.target.value))}
+        disabled={props.heroIdentifiers.length >= 4}
+        style={{minWidth: "100px", textAlign: "left"}}
+      >
+        {[...Array(props.seasons).keys()].reverse().slice(0, 5).map((s) => {
+          return <MenuItem key={s + 1} value={s + 1}>{s + 1}</MenuItem>
+        })}
+      </TextField>
       <TextField
         className={"MenuItem"}
         select

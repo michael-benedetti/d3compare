@@ -9,6 +9,7 @@ export interface D3Repository {
   getHero: (region: string, account: string, heroId: string) => Promise<any>;
   getDetailedItems: (region: string, account: string, heroId: string) => Promise<any>;
   getLeaderboard: (season: string, leaderboard: string) => Promise<any>;
+  getSeasons: () => Promise<any>;
 }
 
 export interface HeroIdentifier {
@@ -416,4 +417,14 @@ export interface LeaderData {
 export interface Leaderboard {
   links: any;
   row: Leader[];
+}
+
+export interface Seasons {
+  _links: any;
+  season: any[];
+  current_season: number;
+  service_current_season: number;
+  service_season_state: string;
+  last_update_time: string;
+  generated_by: string;
 }

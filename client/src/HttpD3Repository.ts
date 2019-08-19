@@ -1,4 +1,4 @@
-import {D3Repository, Leaderboard} from "./helpers/interfaces";
+import {D3Repository, Leaderboard, Seasons} from "./helpers/interfaces";
 
 export class HttpD3Repository implements D3Repository {
   public async getProfile(region: string, account: string) {
@@ -19,6 +19,11 @@ export class HttpD3Repository implements D3Repository {
   public async getLeaderboard(season: string, leaderboard: string): Promise<Leaderboard> {
     const leaders = await fetch(`/api/v1/getLeaderboard?season=${season}&leaderboard=${leaderboard}`);
     return await leaders.json();
+  }
+
+  public async getSeasons(): Promise<Seasons> {
+    const seasons = await fetch(`/api/v1/getSeasons`);
+    return await seasons.json();
   }
 
   private sanitize(original: string) {

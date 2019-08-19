@@ -59,6 +59,12 @@ public class D3Controller {
         return makeGetRequest(requestUrl, referrer);
     }
 
+    @GetMapping("/getSeasons")
+    public Object getSeasons(@RequestHeader(value = "referer", required = false) String referrer) {
+        String requestUrl = String.format("https://us.api.blizzard.com/data/d3/season/?access_token=%s", accessToken.getAccessToken());
+        return makeGetRequest(requestUrl, referrer);
+    }
+
     private Object makeGetRequest(String requestUrl, String referrer) {
         if ((referrer == null || !referrer.contains(d3compareUrl)) && !envType.equals("dev")) {
             return "Ah, ah ah!  You didn't say the magic word!";
