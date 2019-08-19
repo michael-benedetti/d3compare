@@ -14,6 +14,7 @@ import HeroLegendaryPowers from "./HeroLegendaryPowers";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {AppContext, IAppContext} from "./App";
 import {defaultDetailedItems} from "./helpers/helpers";
+import ErrorBoundary from "./ErrorBoundary";
 
 interface HeroCardProps {
   handleHeroChange: (newHeroIdentifier: HeroIdentifier, heroIndex: number) => void;
@@ -77,26 +78,36 @@ function HeroCard(props: HeroCardProps) {
         />
         {!loadingHero ? hero && profile ?
           <div className="Hero">
-            <HeroInfo hero={hero}/>
-            <HeroGrid
-              heroIdentifier={props.heroIdentifier}
-              heroIndex={props.heroIndex}
-              hero={hero}
-              detailedItems={detailedItems}
-            />
-            <HeroSkills
-              hero={hero}
-              heroIndex={props.heroIndex}
-            />
-            <HeroLegendaryPowers
-              hero={hero}
-              heroIndex={props.heroIndex}
-            />
+            <ErrorBoundary>
+              <HeroInfo hero={hero}/>
+            </ErrorBoundary>
+            <ErrorBoundary>
+              <HeroGrid
+                heroIdentifier={props.heroIdentifier}
+                heroIndex={props.heroIndex}
+                hero={hero}
+                detailedItems={detailedItems}
+              />
+            </ErrorBoundary>
+            <ErrorBoundary>
+              <HeroSkills
+                hero={hero}
+                heroIndex={props.heroIndex}
+              />
+            </ErrorBoundary>
+            <ErrorBoundary>
+              <HeroLegendaryPowers
+                hero={hero}
+                heroIndex={props.heroIndex}
+              />
+            </ErrorBoundary>
+            <ErrorBoundary message={"Error loading stats"}>
             <HeroStats
               hero={hero}
               heroIndex={props.heroIndex}
               detailedItems={detailedItems}
             />
+            </ErrorBoundary>
           </div>
           : attemptedToLoadHero &&
           <div style={{fontFamily: "exocet-blizzard-light", color: "red"}}>

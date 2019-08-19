@@ -97,13 +97,13 @@ function App(props: AppProps) {
   }
 
   async function handleRemoveHero(heroIndex: number) {
-    const newHeroIdentifiers = heroIdentifiers.filter((hero, i) => i !== heroIndex);
+    const newHeroIdentifiers = heroIdentifiers.filter((hero: HeroIdentifier, i: number) => i !== heroIndex);
     updateHistory(newHeroIdentifiers);
     setHeroIdentifiers(newHeroIdentifiers);
   }
 
   function handleHeroChange(newHeroIdentifier: HeroIdentifier, heroIndex: number) {
-    const newHeroIdentifiers = heroIdentifiers.map((heroIdentifier, i) => {
+    const newHeroIdentifiers = heroIdentifiers.map((heroIdentifier: HeroIdentifier, i: number) => {
       return i === heroIndex ? newHeroIdentifier : heroIdentifier;
     });
     updateHistory(newHeroIdentifiers);
