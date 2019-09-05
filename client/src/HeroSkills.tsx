@@ -1,6 +1,6 @@
 import {DetailedHeroData, Skill} from "./helpers/interfaces";
 import * as React from "react";
-import {Tooltip} from "@material-ui/core";
+import Tooltip from "@material-ui/core/Tooltip";
 import "./css/HeroSkills.css";
 import {AppContext, IAppContext} from "./App";
 import {useContext} from "react";

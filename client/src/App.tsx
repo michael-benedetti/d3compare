@@ -8,7 +8,7 @@ import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import uniqid = require('uniqid');
 import AddHero from "./AddHero";
-import {LinearProgress} from "@material-ui/core";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 interface AppProps {
   history: History;

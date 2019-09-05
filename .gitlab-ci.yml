@@ -5,9 +5,9 @@ image:
     - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 
 stages:
-  - test
+  - sonarqube
 
-test:
-  stage: test
-  script: pipeline/gitlab_ci_test.sh
+sonarqube:
+  stage: sonarqube
+  script: pipeline/gitlab_ci_security.sh
 
