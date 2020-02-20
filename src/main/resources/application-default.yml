@@ -2,3 +2,14 @@ d3:
   client:
     secret: ${D3_CLIENT_SECRET}
     id: ${D3_CLIENT_ID}
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          d3:
+            clientId: ${D3_CLIENT_ID}
+            clientSecret: ${D3_CLIENT_SECRET}
+        provider:
+          d3:
+            issuer-uri: https://us.battle.net/oauth

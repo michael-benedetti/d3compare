@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.1.1.RELEASE'
+        springBootVersion = '2.2.4.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -12,7 +12,6 @@ buildscript {
 
 plugins {
     id 'io.franzbecker.gradle-lombok' version '1.14'
-    id "org.sonarqube" version "2.6.2"
 }
 
 apply plugin: 'java'
@@ -30,24 +29,13 @@ repositories {
 }
 
 dependencies {
+    implementation( "org.springframework.boot:spring-boot-starter-oauth2-client")
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-devtools')
     providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
     annotationProcessor('org.springframework.boot:spring-boot-configuration-processor')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
-
-
-sonarqube {
-    properties {
-        property 'sonar.host.url', "$System.env.D3COMPARE_SONAR_URL"
-        property 'sonar.projectKey', "d3compare"
-        property 'sonar.projectName', "d3compare"
-        property 'sonar.login', "$System.env.D3COMPARE_SONAR_LOGIN"
-        properties["sonar.sources"] += "client/src"
-    }
-}
-
 
 lombok {
     version = '1.18.2'
