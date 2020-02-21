@@ -1,6 +1,6 @@
 package local.home.d3;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -14,12 +14,6 @@ public class D3Controller {
     private AuthService authService;
     private LocalDateTime tokenExpire;
 
-    @Value("${D3COMPARE_URL}")
-    private String d3compareUrl;
-
-    @Value("${D3COMPARE_ENVTYPE}")
-    private String envType;
-
     public D3Controller(AuthService authService) {
         this.authService = authService;
         reAuthenticate();
@@ -27,48 +21,41 @@ public class D3Controller {
 
     @GetMapping("/getProfile")
     public Object getProfile(@RequestParam(value = "profile") String profile,
-                             @RequestParam(value = "region") String region,
-                             @RequestHeader(value = "referer", required = false) String referrer) {
+                             @RequestParam(value = "region") String region) {
         String requestUrl = String.format("https://%s.api.blizzard.com/d3/profile/%s/?locale=en_US&access_token=%s", region, profile, accessToken.getAccessToken());
-        return makeGetRequest(requestUrl, referrer);
+        return makeGetRequest(requestUrl);
     }
 
     @GetMapping("/getHero")
     public Object getHero(@RequestParam(value = "profile") String profile,
                           @RequestParam(value = "region") String region,
-                          @RequestParam(value = "heroId") String heroId,
-                          @RequestHeader(value = "referer", required = false) String referrer) {
+                          @RequestParam(value = "heroId") String heroId) {
         String requestUrl = String.format("https://%s.api.blizzard.com/d3/profile/%s/hero/%s?locale=en_US&access_token=%s", region, profile, heroId, accessToken.getAccessToken());
-        return makeGetRequest(requestUrl, referrer);
+        return makeGetRequest(requestUrl);
     }
 
     @GetMapping("/getDetailedItems")
     public Object getDetailedItems(@RequestParam(value = "profile") String profile,
                                    @RequestParam(value = "region") String region,
-                                   @RequestParam(value = "heroId") String heroId,
-                                   @RequestHeader(value = "referer", required = false) String referrer) {
+                                   @RequestParam(value = "heroId") String heroId) {
         String requestUrl = String.format("https://%s.api.blizzard.com/d3/profile/%s/hero/%s/items?locale=en_US&access_token=%s", region, profile, heroId, accessToken.getAccessToken());
-        return makeGetRequest(requestUrl, referrer);
+        return makeGetRequest(requestUrl);
     }
 
     @GetMapping("/getLeaderboard")
     public Object getLeaderboard(@RequestParam(value = "season") String season,
-                                 @RequestParam(value = "leaderboard") String leaderboard,
-                                 @RequestHeader(value = "referer", required = false) String referrer) {
+                                 @RequestParam(value = "leaderboard") String leaderboard) {
         String requestUrl = String.format("https://us.api.blizzard.com/data/d3/season/%s/leaderboard/%s?access_token=%s", season, leaderboard, accessToken.getAccessToken());
-        return makeGetRequest(requestUrl, referrer);
+        return makeGetRequest(requestUrl);
     }
 
     @GetMapping("/getSeasons")
-    public Object getSeasons(@RequestHeader(value = "referer", required = false) String referrer) {
+    public Object getSeasons() {
         String requestUrl = String.format("https://us.api.blizzard.com/data/d3/season/?access_token=%s", accessToken.getAccessToken());
-        return makeGetRequest(requestUrl, referrer);
+        return makeGetRequest(requestUrl);
     }
 
-    private Object makeGetRequest(String requestUrl, String referrer) {
-        if ((referrer == null || !referrer.contains(d3compareUrl)) && !envType.equals("dev")) {
-            return "Ah, ah ah!  You didn't say the magic word!";
-        }
+    private Object makeGetRequest(String requestUrl) {
         validateAccessToken();
         RestTemplate restTemplate = new RestTemplate();
         try {

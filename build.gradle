@@ -29,12 +29,16 @@ repositories {
 }
 
 dependencies {
+
     implementation( "org.springframework.boot:spring-boot-starter-oauth2-client")
-    compile('org.springframework.boot:spring-boot-starter-web')
-    compile('org.springframework.boot:spring-boot-devtools')
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation('org.springframework.boot:spring-boot-starter-actuator')
+//    implementation('org.springframework.boot:spring-boot-devtools')
+
     providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
     annotationProcessor('org.springframework.boot:spring-boot-configuration-processor')
-    testCompile('org.springframework.boot:spring-boot-starter-test')
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
 
 lombok {
