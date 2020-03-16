@@ -18,11 +18,20 @@ public class UserController {
     }
 
     @GetMapping("/getBattleTag")
-    public Object getBattleTag() {
+    public String getBattleTag() {
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof String) {
             return null;
         }
         OidcUser user = (OidcUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return user.getAttribute("battle_tag");
+    }
+
+    @GetMapping("/getUser")
+    public Object getUser() {
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof String) {
+            return null;
+        }
+        OidcUser user = (OidcUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return user;
     }
 }

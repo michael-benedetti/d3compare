@@ -10,6 +10,7 @@ export interface D3Repository {
   getDetailedItems: (region: string, account: string, heroId: string) => Promise<any>;
   getLeaderboard: (season: string, leaderboard: string) => Promise<any>;
   getSeasons: () => Promise<any>;
+  getBattleTag: () => Promise<string>;
 }
 
 export interface HeroIdentifier {

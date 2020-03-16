@@ -61,3 +61,33 @@ export const defaultDetailedItems: DetailedItems = {
   torso: defaultDetailedItem,
   waist: defaultDetailedItem
 };
+
+export const getClassPortraitOffset = (clazz: string, gender: number) => {
+  let y: number;
+  switch (clazz) {
+    case "barbarian":
+      y = 0;
+      break;
+    case "demon-hunter":
+      y = 66;
+      break;
+    case "monk":
+      y = 132;
+      break;
+    case "witch-doctor":
+      y = 198;
+      break;
+    case "wizard":
+      y = 264;
+      break;
+    case "crusader":
+      y = 330;
+      break;
+    case "necromancer":
+      y = 396;
+      break;
+    default:
+      y = 0;
+  }
+  return `${gender * 83}px -${y}px`;
+};

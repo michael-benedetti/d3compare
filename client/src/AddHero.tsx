@@ -6,6 +6,7 @@ import {useEffect, useState} from "react";
 import {HeroIdentifier} from "./helpers/interfaces";
 import uniqid = require("uniqid");
 import "./css/AddHero.css";
+import LoginWidget from "./LoginWidget";
 
 
 interface AddHeroProps {
@@ -114,6 +115,10 @@ function AddHero(props: AddHeroProps) {
           return <MenuItem key={`rank-${n}`} value={n}>{n}</MenuItem>
         })}
       </TextField>
+      <div className={"Divider MenuItem"}/>
+      <LoginWidget
+        handleAddHero={props.handleAddHero}
+      />
     </div>
   )
 }

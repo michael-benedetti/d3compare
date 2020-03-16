@@ -53,6 +53,7 @@ export const AppContext = React.createContext<IAppContext>({
     getDetailedItems: () => Promise.resolve({}),
     getLeaderboard: () => Promise.resolve({}),
     getSeasons: () => Promise.resolve({}),
+    getBattleTag: () => Promise.resolve(""),
   },
   tooltipVisible: "",
   handleShowTooltip: () => {},

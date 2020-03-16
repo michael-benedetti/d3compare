@@ -26,6 +26,11 @@ export class HttpD3Repository implements D3Repository {
     return await seasons.json();
   }
 
+  public async getBattleTag(): Promise<string> {
+    const battleTag = await fetch(`/user/getBattleTag`);
+    return await battleTag.text();
+  }
+
   private sanitize(original: string) {
     return original.replace("#", "-");
   }

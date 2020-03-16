@@ -1,11 +1,11 @@
-@media only screen and (max-width: 1219px) {
+@media only screen and (max-width: 1449px) {
     .MenuBar {
         padding-top: 10px;
         flex-direction: column;
     }
 }
 
-@media only screen and (min-width: 1220px) {
+@media only screen and (min-width: 1450px) {
     .Title {
         margin-left: 20px;
     }
@@ -54,4 +54,9 @@
     font-size: 30px;
     font-weight: bold;
     text-shadow: 1px 1px 1px black;
+}
+
+a, a:visited {
+    color: red;
+    text-decoration: none;
 }
