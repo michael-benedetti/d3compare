@@ -22,7 +22,7 @@ public class D3Controller {
     @GetMapping("/getProfile")
     public Object getProfile(@RequestParam(value = "profile") String profile,
                              @RequestParam(value = "region") String region) {
-        String requestUrl = String.format("https://%s.api.blizzard.com/d3/profile/%s/?locale=en_US&access_token=%s", region, profile, accessToken.getAccessToken());
+        String requestUrl = String.format("https://%s.api.blizzard.com/d3/profile/%s/?locale=en_US&access_token=", region, profile);
         return makeGetRequest(requestUrl);
     }
 
@@ -30,7 +30,7 @@ public class D3Controller {
     public Object getHero(@RequestParam(value = "profile") String profile,
                           @RequestParam(value = "region") String region,
                           @RequestParam(value = "heroId") String heroId) {
-        String requestUrl = String.format("https://%s.api.blizzard.com/d3/profile/%s/hero/%s?locale=en_US&access_token=%s", region, profile, heroId, accessToken.getAccessToken());
+        String requestUrl = String.format("https://%s.api.blizzard.com/d3/profile/%s/hero/%s?locale=en_US&access_token=", region, profile, heroId);
         return makeGetRequest(requestUrl);
     }
 
@@ -38,20 +38,20 @@ public class D3Controller {
     public Object getDetailedItems(@RequestParam(value = "profile") String profile,
                                    @RequestParam(value = "region") String region,
                                    @RequestParam(value = "heroId") String heroId) {
-        String requestUrl = String.format("https://%s.api.blizzard.com/d3/profile/%s/hero/%s/items?locale=en_US&access_token=%s", region, profile, heroId, accessToken.getAccessToken());
+        String requestUrl = String.format("https://%s.api.blizzard.com/d3/profile/%s/hero/%s/items?locale=en_US&access_token=", region, profile, heroId);
         return makeGetRequest(requestUrl);
     }
 
     @GetMapping("/getLeaderboard")
     public Object getLeaderboard(@RequestParam(value = "season") String season,
                                  @RequestParam(value = "leaderboard") String leaderboard) {
-        String requestUrl = String.format("https://us.api.blizzard.com/data/d3/season/%s/leaderboard/%s?access_token=%s", season, leaderboard, accessToken.getAccessToken());
+        String requestUrl = String.format("https://us.api.blizzard.com/data/d3/season/%s/leaderboard/%s?access_token=", season, leaderboard);
         return makeGetRequest(requestUrl);
     }
 
     @GetMapping("/getSeasons")
     public Object getSeasons() {
-        String requestUrl = String.format("https://us.api.blizzard.com/data/d3/season/?access_token=%s", accessToken.getAccessToken());
+        String requestUrl = String.format("https://us.api.blizzard.com/data/d3/season/?access_token=");
         return makeGetRequest(requestUrl);
     }
 
@@ -59,7 +59,7 @@ public class D3Controller {
         validateAccessToken();
         RestTemplate restTemplate = new RestTemplate();
         try {
-            return restTemplate.getForObject(requestUrl, Object.class);
+            return restTemplate.getForObject(requestUrl + accessToken.getAccessToken(), Object.class);
         } catch (HttpClientErrorException e) {
             return "error";
         }
